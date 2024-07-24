@@ -1,10 +1,7 @@
 package com.faken.aiproject.service.impl;
 
 import com.faken.aiproject.mapper.ApplicationMapper;
-import com.faken.aiproject.po.entity.Application;
-import com.faken.aiproject.po.entity.Model;
-import com.faken.aiproject.po.entity.PageBean;
-import com.faken.aiproject.po.entity.User;
+import com.faken.aiproject.po.entity.*;
 import com.faken.aiproject.po.vo.MyApplicationVO;
 import com.faken.aiproject.po.vo.ReceivedApplicationVO;
 import com.faken.aiproject.service.ApplicationService;
@@ -93,11 +90,25 @@ public class ApplicationServiceImpl implements ApplicationService {
             receivedApplicationVO.setApplicantName(user.getUsername());
             list.add(receivedApplicationVO);
         }
-        
+
         pageBean.setData(list);
         return pageBean;
     }
 
+    //通过申请
+    @Override
+    public boolean passApplication(int applicationId) {
+        Application application = applicationMapper.selectByApplicationId(applicationId);
+        applicationMapper.changeApplicationStatusPass(applicationId); //更改为同意的状态码
+        ModelAuth modelAuth = new ModelAuth();
+        modelAuth.setModelId(application.getModelId()); //模型id
+        modelAuth.setUserId(application.getApplicantId());
+        int i = applicationMapper.addModelAuth(modelAuth);
+        if (i == 0){
+            return false;
+        }
+        return true;
+    }
 
 
 }

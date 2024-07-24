@@ -25,4 +25,8 @@ public interface ApplicationService {
     public PageBean<ReceivedApplicationVO> selectAsRespondentApplicationByPage(int userId, int begin);
 
 
+    //同意申请
+    public boolean passApplication(int applicationId);
+
+
 }

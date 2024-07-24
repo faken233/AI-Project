@@ -2,11 +2,9 @@ package com.faken.aiproject.mapper;
 
 import com.faken.aiproject.po.entity.Application;
 import com.faken.aiproject.po.entity.Model;
+import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -57,5 +55,18 @@ public interface ApplicationMapper {
     //暂时，通过id查找一个人
     @Select("select * from user where user_id = #{id}")
     public User selectUserById(int id);
+
+    //根据申请的id查询这条申请
+    @Select("select * from application where application_id = #{applicationId}")
+    public Application selectByApplicationId(int applicationId);
+
+    @Update("update application set status = 1 where application_id = #{applicationId}")
+    public void changeApplicationStatusPass(int applicationId);
+
+    //添加一个用户权限信息
+    @Insert("insert into model_auth (model_id, user_id, deletable) values (#{modelId}, #{userId}, 0)")
+    public int addModelAuth(ModelAuth modelAuth);
+
+
 
 }

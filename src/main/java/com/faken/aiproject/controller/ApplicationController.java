@@ -2,6 +2,7 @@ package com.faken.aiproject.controller;
 
 import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.po.dto.ApplyModelDTO;
+import com.faken.aiproject.po.dto.HandlerApplicationDTO;
 import com.faken.aiproject.po.entity.Application;
 import com.faken.aiproject.po.entity.PageBean;
 import com.faken.aiproject.po.result.Result;
@@ -23,7 +24,7 @@ public class ApplicationController {
 
     //首页查询各种类型的申请数量
     // /application/myApplicationCount?userId=
-    @RequestMapping ("/myApplicationCount")
+    @GetMapping ("/myApplicationCount")
     public Result<AllApplicationTypeVO> myApplicationCount (@RequestParam("userId") int userId){
         //查询所有申请条数
         AllApplicationTypeVO allApplicationTypeVO = new AllApplicationTypeVO();
@@ -39,7 +40,7 @@ public class ApplicationController {
     }
 
     //添加申请模型权限
-    @RequestMapping("/applyModel")
+    @PostMapping("/applyModel")
     public Result<?> applyModel(@RequestBody ApplyModelDTO applyModelDTO){
         Application application = new Application();
         BeanUtils.copyProperties(applyModelDTO,application);
@@ -52,7 +53,7 @@ public class ApplicationController {
 
 
     //查询我的申请，我向别人发出申请
-    @RequestMapping("/myApplication")
+    @GetMapping("/myApplication")
     public Result<PageBean<MyApplicationVO>> myApplication(@RequestParam("userId") int userId, @RequestParam("currentPage") int currentPage){
         PageBean<MyApplicationVO> selectAsApplicantApplicationByPage = applicationService.selectAsApplicantApplicationByPage(userId, currentPage);
         //返回结果
@@ -60,7 +61,7 @@ public class ApplicationController {
     }
 
     //查询我的信息
-    @RequestMapping("/receivedApplication")
+    @GetMapping("/receivedApplication")
     public Result<PageBean<ReceivedApplicationVO>> receivedApplication(@RequestParam("userId") int userId, @RequestParam("currentPage") int currentPage){
         PageBean<ReceivedApplicationVO> selectAsRespondentApplicationByPage = applicationService.selectAsRespondentApplicationByPage(userId, currentPage);
         //返回结果
@@ -68,6 +69,17 @@ public class ApplicationController {
     }
 
 
+    //通过申请同意
+    @PostMapping("/passApplication")
+    public Result<?> passApplication(@RequestBody HandlerApplicationDTO handlerApplicationDTO){
+
+        boolean b = applicationService.passApplication(handlerApplicationDTO.getApplicationId());
+        if(b){
+            return Result.success("已同意该申请");
+        }else {
+            return Result.error("同意不通过");
+        }
+    }
 
 
 

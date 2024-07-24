@@ -66,6 +66,7 @@ public class AccountController {
             return Result.success("成功",res);
         }
     }
+
     @GetMapping("/account/personalCenter/info")
     public Result<?> getPersonalCenterInfo(@RequestParam("userId") String userId){
         PersonalCenterInfoVO res = accountService.getPersonalCenterInfo(userId);

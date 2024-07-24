@@ -7,18 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-
+public class UserAndToken {
+    private String token;
     private int userId;
-
-    private String  username;
-
-    private String  password;
-
-    private String  email;
-
-    private String  description;
-
-    private String  image;
-
 }

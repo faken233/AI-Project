@@ -12,11 +12,15 @@ import java.util.Date;
 public class Application {
 
    private int applicationId; //主键ID
-   private int applicantId; //申请人ID
-   private int respondentId; //被申请人ID
-   private int modelId; //申请的模型的ID
-   private String applyTime; //申请时间
-   private int status; //消息状态，
 
+   private int applicantId; //申请人ID
+
+   private int respondentId; //被申请人ID
+
+   private int modelId; //申请的模型的ID
+
+   private String applyTime; //申请时间
+
+   private int status; //消息状态，
 
 }

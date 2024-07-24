@@ -33,5 +33,7 @@ public class Constant {
     public static final int ACCESSED_MODEL = 1;
     public static final int APPLICABLE_MODEL = 0;
 
+    // OSS地址
+    public static final String OSS_URL = "";
 
 }

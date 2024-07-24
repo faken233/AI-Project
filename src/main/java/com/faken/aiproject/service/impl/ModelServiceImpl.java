@@ -2,6 +2,7 @@ package com.faken.aiproject.service.impl;
 
 import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.mapper.ModelMapper;
+import com.faken.aiproject.po.dto.UploadNewModelDTO;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.result.PageBean;
@@ -14,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,12 +44,26 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     @Transactional
-    public int uploadModel(Model model,String url) {
+    public int uploadModel(UploadNewModelDTO uploadNewModelDTO) throws IOException {
+        // TODO 设置云端oss
+
+        String url = "D:\\QG_project\\files\\";//设置本地地址，后面更改为服务器地址
+        byte[] bytes = uploadNewModelDTO.getFile().getBytes();
+        Path path = Paths.get(url + uploadNewModelDTO.getFile().getOriginalFilename());
+        Files.write(path,bytes);
+
+        Model model = new Model();
+//        model.setModelName(uploadNewModelDTO.getModelName());
+//        model.setModelType(uploadNewModelDTO.getModelType());
+//        model.setDescription(uploadNewModelDTO.getDescription());
+//        model.setUserId(uploadNewModelDTO.getUserId());
+        BeanUtils.copyProperties(uploadNewModelDTO, model);
+        model.setCharacterType(Constant.USER);
         int i  = modelMapper.insertModel(model);//插入模型表
         if (i == 1){
             //插入成功
             int modelId = model.getModelId();
-            if (modelMapper.insertModelUrl(modelId,url) ==1 ){//插入模型地址表
+            if (modelMapper.insertModelUrl(modelId,url) == 1){//插入模型地址表
                 ModelAuth modelAuth = new ModelAuth();
                 BeanUtils.copyProperties(model,modelAuth);
                 modelAuth.setDeletable(Constant.CAN_DELETE);

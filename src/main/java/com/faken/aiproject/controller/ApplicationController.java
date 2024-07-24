@@ -3,8 +3,11 @@ package com.faken.aiproject.controller;
 import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.po.dto.ApplyModelDTO;
 import com.faken.aiproject.po.entity.Application;
+import com.faken.aiproject.po.entity.PageBean;
 import com.faken.aiproject.po.result.Result;
 import com.faken.aiproject.po.vo.AllApplicationTypeVO;
+import com.faken.aiproject.po.vo.MyApplicationVO;
+import com.faken.aiproject.po.vo.ReceivedApplicationVO;
 import com.faken.aiproject.service.ApplicationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,15 @@ public class ApplicationController {
             return Result.error("失败添加申请模型权限");
         }
         return Result.success("成功添加申请模型权限");
+    }
+
+
+    //查询我的申请，我向别人发出申请
+    @RequestMapping("/myApplication")
+    public Result<PageBean<MyApplicationVO>> myApplication(@RequestParam("userId") int userId, @RequestParam("currentPage") int currentPage){
+        PageBean<MyApplicationVO> selectAsApplicantApplicationByPage = applicationService.selectAsApplicantApplicationByPage(userId, currentPage);
+        //返回结果
+        return Result.success("success", selectAsApplicantApplicationByPage);
     }
 
 

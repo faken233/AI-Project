@@ -6,6 +6,7 @@ import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.PageBean;
 import com.faken.aiproject.po.entity.User;
 import com.faken.aiproject.po.vo.MyApplicationVO;
+import com.faken.aiproject.po.vo.ReceivedApplicationVO;
 import com.faken.aiproject.service.ApplicationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,16 +70,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         return pageBean;
     }
 
-//    @Override
-//    public PageBean<Application> selectAsRespondentApplicationByPage(int userId, int begin) {
-//        PageBean<Application> pageBean  = new PageBean<>();
-//        //查询总数量
-//        int count = applicationMapper.asRespondentApplicationCount(userId);
-//        pageBean.setCount(count);
-//        //具体东西
-//
-//
-//    }
+
 
 
 }

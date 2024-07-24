@@ -13,7 +13,7 @@ public interface ModelMapper {
     List<Model> selectByUsedTimes();
 
 
-    @Options(useGeneratedKeys = true,keyColumn = "model_id")
+    @Options(useGeneratedKeys = true,keyProperty = "modelId")
     @Insert("insert into model(user_id,model_name,model_type,description,character_type) " +
             "values (#{userId},#{modelName},#{modelType},#{description},#{characterType})")
     int insertModel(Model model);
@@ -24,6 +24,13 @@ public interface ModelMapper {
     @Insert("insert into model_auth(model_id,user_id,deletable) values (#{modelId},#{userId},#{deletable})")
     int insertModelAuth(ModelAuth modelAuth);
 
-    @Delete("delete from model ")
+    @Delete("delete from model where model_id = #{modelId} ")
     int deleteModelByModelId(String modelId);
+
+    @Delete("delete from model_auth where model_id = #{modelId}")
+    int deleteModelAuthByModelId(String modelId);
+
+    @Delete("delete from model_url where model_id = #{modelId}")
+    int deleteModelUrlByModelId(String modelId);
+
 }

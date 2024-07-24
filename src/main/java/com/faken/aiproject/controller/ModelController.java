@@ -82,7 +82,7 @@ public class ModelController {
     @DeleteMapping("/deleteModel")
     public Result<?> deleteModel(@RequestParam("modelId") String modelId) {
         int i = modelService.deleteModel(modelId);
-        if (i == 1){
+        if (i != 0){
             return Result.success("删除模型成功");
         }else {
             return Result.error("删除模型失败，请稍后再试");

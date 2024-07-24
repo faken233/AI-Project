@@ -55,6 +55,16 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public int deleteModel(String modelId) {
-        return modelMapper.deleteModelByModelId(modelId);
+        if (modelMapper.deleteModelByModelId(modelId) != 0){
+            if (modelMapper.deleteModelUrlByModelId(modelId) != 0) {
+                return modelMapper.deleteModelAuthByModelId(modelId);
+            }else {
+                return 0;
+            }
+        }else
+        {
+            return 0;
+        }
+
     }
 }

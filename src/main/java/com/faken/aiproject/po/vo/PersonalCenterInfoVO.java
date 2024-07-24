@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonalCenterInfoVo {
+public class PersonalCenterInfoVO {
     private String email;
     private String username;
     private String description;

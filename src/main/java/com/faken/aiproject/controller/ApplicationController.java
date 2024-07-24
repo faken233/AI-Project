@@ -77,11 +77,21 @@ public class ApplicationController {
         if(b){
             return Result.success("已同意该申请");
         }else {
-            return Result.error("同意不通过");
+            return Result.error("操作失败");
         }
     }
 
+    //拒绝该申请
+    @PostMapping("/rejectApplication")
+    public Result<?> rejectApplication(@RequestBody HandlerApplicationDTO handlerApplicationDTO){
 
+        boolean b = applicationService.rejectApplication(handlerApplicationDTO.getApplicationId());
+        if(b){
+            return Result.success("已拒绝该申请");
+        }else {
+            return Result.error("操作失败");
+        }
+    }
 
 
 

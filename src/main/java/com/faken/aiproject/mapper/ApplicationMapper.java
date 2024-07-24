@@ -67,6 +67,8 @@ public interface ApplicationMapper {
     @Insert("insert into model_auth (model_id, user_id, deletable) values (#{modelId}, #{userId}, 0)")
     public int addModelAuth(ModelAuth modelAuth);
 
-
+    //拒绝申请
+    @Update("update application set status = 2 where application_id = #{applicationId}")
+    public void changeApplicationStatusReject(int applicationId);
 
 }

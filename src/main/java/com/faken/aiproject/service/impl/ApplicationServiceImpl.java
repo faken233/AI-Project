@@ -110,5 +110,11 @@ public class ApplicationServiceImpl implements ApplicationService {
         return true;
     }
 
+    //拒绝申请
+    @Override
+    public boolean rejectApplication(int applicationId) {
+        applicationMapper.changeApplicationStatusReject(applicationId); //更改为拒绝的状态码
+        return true;
+    }
 
 }

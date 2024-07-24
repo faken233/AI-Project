@@ -28,5 +28,6 @@ public interface ApplicationService {
     //同意申请
     public boolean passApplication(int applicationId);
 
-
+    //拒绝申请
+    public boolean rejectApplication(int applicationId);
 }

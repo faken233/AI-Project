@@ -5,6 +5,8 @@ import com.faken.aiproject.mapper.AccountMapper;
 import com.faken.aiproject.po.dto.LoginDTO;
 import com.faken.aiproject.po.dto.RegisterDTO;
 import com.faken.aiproject.po.entity.User;
+import com.faken.aiproject.po.vo.HomePageInfoVo;
+import com.faken.aiproject.po.vo.PersonalCenterInfoVo;
 import com.faken.aiproject.properties.MailProperties;
 import com.faken.aiproject.service.AccountService;
 import com.faken.aiproject.util.JwtUtils;
@@ -114,5 +116,29 @@ public class AccountServiceImpl implements AccountService {
             return 0;
         }
         return -1;
+    }
+
+    @Override
+    public HomePageInfoVo getHomePageInfo(String userId) {
+        User user=accountMapper.selectById(userId);
+        if(user==null){
+            return null;
+        }else{
+            HomePageInfoVo homePageInfoVo = new HomePageInfoVo();
+            BeanUtils.copyProperties(user,homePageInfoVo);
+            return homePageInfoVo;
+        }
+    }
+
+    @Override
+    public PersonalCenterInfoVo getPersonalCenterInfo(String userId) {
+        User user = accountMapper.selectById(userId);
+        if(user==null){
+            return null;
+        }else{
+            PersonalCenterInfoVo personalCenterInfoVo = new PersonalCenterInfoVo();
+            BeanUtils.copyProperties(user,personalCenterInfoVo);
+            return personalCenterInfoVo;
+        }
     }
 }

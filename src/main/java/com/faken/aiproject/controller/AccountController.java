@@ -3,12 +3,12 @@ package com.faken.aiproject.controller;
 import com.faken.aiproject.po.dto.LoginDTO;
 import com.faken.aiproject.po.dto.RegisterDTO;
 import com.faken.aiproject.po.result.Result;
+import com.faken.aiproject.po.vo.HomePageInfoVo;
+import com.faken.aiproject.po.vo.PersonalCenterInfoVo;
 import com.faken.aiproject.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.Objects;
@@ -21,7 +21,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/register")
+    @PostMapping("/account/register")
     public Result<?> register(@RequestBody RegisterDTO registerDTO) {
 
         int res = accountService.register(registerDTO);
@@ -35,7 +35,7 @@ public class AccountController {
         return Result.error("出现未知异常...");
     }
 
-    @PostMapping("/register/sendVerificationCode")
+    @PostMapping("/account/register/sendVerificationCode")
     public Result<?> sendVerificationCode(@RequestBody Map<String, String> body) {
         try {
             accountService.sendVerificationCodeAndSaveCode(body.get("email"));
@@ -45,7 +45,7 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/account/login")
     public Result<?> login(@RequestBody LoginDTO loginDTO) {
 
         String res = accountService.login(loginDTO);
@@ -56,5 +56,22 @@ public class AccountController {
         }
     }
 
-
+    @GetMapping("/account/homePageInfo")
+    public Result<?> getHomePageInfo(@RequestParam("userId") String userId){
+        HomePageInfoVo res = accountService.getHomePageInfo(userId);
+        if(Objects.isNull(res)){
+            return Result.error("查找失败，请检查你的用户id");
+        }else{
+            return Result.success("成功",res);
+        }
+    }
+    @GetMapping("/account/personalCenter/info")
+    public Result<?> getPersonalCenterInfo(@RequestParam("userId") String userId){
+        PersonalCenterInfoVo res = accountService.getPersonalCenterInfo(userId);
+        if(Objects.isNull(res)){
+            return Result.error("查找失败，请检查你的用户id");
+        }else{
+            return Result.success("成功",res);
+        }
+    }
 }

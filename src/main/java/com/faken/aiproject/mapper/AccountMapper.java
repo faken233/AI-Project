@@ -15,7 +15,7 @@ public interface AccountMapper {
     User selectByEmail(RegisterDTO registerDTO);
 
     @Options(useGeneratedKeys = true, keyProperty = "userId")
-    @Insert("insert into users (password, email, user_name) VALUES (#{password}, #{email}, #{userName})")
+    @Insert("insert into users (password, email, username) VALUES (#{password}, #{email}, #{userName})")
     void registerNewUser(User newUser);
 
 

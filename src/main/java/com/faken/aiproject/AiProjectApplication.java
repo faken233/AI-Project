@@ -1,6 +1,5 @@
 package com.faken.aiproject;
 
-import com.faken.aiproject.config.MailConfig;
 import com.faken.aiproject.properties.MailProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

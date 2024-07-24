@@ -3,7 +3,6 @@ package com.faken.aiproject.util;
 import com.faken.aiproject.constant.Constant;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 import java.util.Map;
@@ -13,7 +12,6 @@ public class JwtUtils {
     public static boolean isTokenExpired(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(Constant.SECURE_KEY)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();

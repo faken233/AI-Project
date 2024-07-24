@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PageBean<T> {
 
-   private long count; //总条数
+   private long total; //总条数
    private List<T> data;
 
 }

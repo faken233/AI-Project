@@ -50,7 +50,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         PageBean<MyApplicationVO> pageBean  = new PageBean<>();
         //查询总数量
         int count = applicationMapper.asApplicantApplicationCount(userId);
-        pageBean.setCount(count);
+        pageBean.setTotal(count);
         begin = (begin - 1) * 6;
         //具体东西
         List<MyApplicationVO> list = new ArrayList<>();
@@ -70,6 +70,32 @@ public class ApplicationServiceImpl implements ApplicationService {
         return pageBean;
     }
 
+
+    // 查询我的信息，也就是别人对我的申请
+    @Override
+    public PageBean<ReceivedApplicationVO> selectAsRespondentApplicationByPage(int userId, int begin) {
+        PageBean<ReceivedApplicationVO> pageBean  = new PageBean<>();
+        //查询总数量
+        int count = applicationMapper.asRespondentApplicationCount(userId);
+        pageBean.setTotal(count);
+        begin = (begin - 1) * 6;
+        //具体东西
+        List<ReceivedApplicationVO> list = new ArrayList<>();
+        List<Application> applications = applicationMapper.selectAsRespondentApplicationByPage(userId, begin, 6);
+        for (Application application : applications) {
+            ReceivedApplicationVO receivedApplicationVO = new ReceivedApplicationVO();
+            BeanUtils.copyProperties(application, receivedApplicationVO);
+            //获取申请模型的名字
+            Model model = applicationMapper.selectModelByModelId(application.getModelId());
+            receivedApplicationVO.setModelName(model.getModelName());
+            //获取申请人的名字
+            User user = applicationMapper.selectUserById(application.getApplicantId());
+            receivedApplicationVO.setApplicantName(user.getUsername());
+            list.add(receivedApplicationVO);
+        }
+        pageBean.setData(list);
+        return pageBean;
+    }
 
 
 

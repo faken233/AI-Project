@@ -22,7 +22,7 @@ public interface ApplicationService {
     public PageBean<MyApplicationVO> selectAsApplicantApplicationByPage(int userId, int begin);
 
     //分页查询我是被申请人的申请
-//    public PageBean<ReceivedApplicationVO> selectAsRespondentApplicationByPage(int userId, int begin);
+    public PageBean<ReceivedApplicationVO> selectAsRespondentApplicationByPage(int userId, int begin);
 
 
 }

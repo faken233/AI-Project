@@ -18,5 +18,6 @@ public interface AccountMapper {
     @Insert("insert into users (password, email, username) VALUES (#{password}, #{email}, #{userName})")
     void registerNewUser(User newUser);
 
-
+    @Select("select * from users where userId=#{userId}")
+    User selectById(String userId);
 }

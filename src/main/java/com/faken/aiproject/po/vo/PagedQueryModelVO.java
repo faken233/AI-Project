@@ -17,6 +17,6 @@ public class PagedQueryModelVO {
     private int characterType;
     private int modelType;
     private int usedTimes;
-    private Date createdTime;
+    private String createdTime;
     private int sign;
 }

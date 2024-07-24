@@ -93,6 +93,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             receivedApplicationVO.setApplicantName(user.getUsername());
             list.add(receivedApplicationVO);
         }
+        
         pageBean.setData(list);
         return pageBean;
     }

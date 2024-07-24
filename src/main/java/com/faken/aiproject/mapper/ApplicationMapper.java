@@ -42,11 +42,11 @@ public interface ApplicationMapper {
     public int asApplicantApplicationCount(int userId);
 
     //分页查询我是被申请人的申请
-    @Select("select * from application where respondent_id = #{userId}  limit #{begin}, #{size} ")
+    @Select("select * from application where respondent_id = #{userId} order by status limit #{begin}, #{size} ")
     public List<Application> selectAsRespondentApplicationByPage(@Param("userId") int userId, @Param("begin") int begin,@Param("size") int size);
 
     //分页查询我是申请人的申请
-    @Select("select * from application where applicant_id = #{userId}  limit #{begin}, #{size} ")
+    @Select("select * from application where applicant_id = #{userId} order by status limit #{begin}, #{size} ")
     public List<Application> selectAsApplicantApplicationByPage(@Param("userId") int userId, @Param("begin") int begin,@Param("size") int size);
 
     //暂时，通过模型ID查找模型

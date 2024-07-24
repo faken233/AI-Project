@@ -1,7 +1,9 @@
 package com.faken.aiproject.controller;
 
+import com.faken.aiproject.po.dto.EmailDTO;
 import com.faken.aiproject.po.dto.LoginDTO;
 import com.faken.aiproject.po.dto.RegisterDTO;
+import com.faken.aiproject.po.entity.UserAndToken;
 import com.faken.aiproject.po.result.Result;
 import com.faken.aiproject.po.vo.HomePageInfoVO;
 import com.faken.aiproject.po.vo.PersonalCenterInfoVO;
@@ -10,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -36,9 +37,9 @@ public class AccountController {
     }
 
     @PostMapping("/account/register/sendVerificationCode")
-    public Result<?> sendVerificationCode(@RequestBody Map<String, String> body) {
+    public Result<?> sendVerificationCode(@RequestBody EmailDTO emailDTO) {
         try {
-            accountService.sendVerificationCodeAndSaveCode(body.get("email"));
+            accountService.sendVerificationCodeAndSaveCode(emailDTO.getEmail());
             return Result.success("发送成功");
         } catch (Exception e) {
             return Result.error("邮箱验证码发送失败");
@@ -46,13 +47,13 @@ public class AccountController {
     }
 
     @PostMapping("/account/login")
-    public Result<?> login(@RequestBody LoginDTO loginDTO) {
+    public Result<UserAndToken> login(@RequestBody LoginDTO loginDTO) {
 
-        String res = accountService.login(loginDTO);
+        UserAndToken res = accountService.login(loginDTO);
         if (Objects.isNull(res)) {
             return Result.error("登陆失败，请检查你的账号和密码是否输入正确");
         }else {
-            return Result.success(res);
+            return Result.success("ok", res);
         }
     }
 

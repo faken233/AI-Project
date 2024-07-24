@@ -1,10 +1,10 @@
 package com.faken.aiproject.service.impl;
 
-import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.mapper.AccountMapper;
 import com.faken.aiproject.po.dto.LoginDTO;
 import com.faken.aiproject.po.dto.RegisterDTO;
 import com.faken.aiproject.po.entity.User;
+import com.faken.aiproject.po.entity.UserAndToken;
 import com.faken.aiproject.po.vo.HomePageInfoVO;
 import com.faken.aiproject.po.vo.PersonalCenterInfoVO;
 import com.faken.aiproject.properties.MailProperties;
@@ -37,8 +37,9 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public String login(LoginDTO loginDTO) {
+    public UserAndToken login(LoginDTO loginDTO) {
         Map<String, Object> claims = new HashMap<>();
+        UserAndToken userAndToken = new UserAndToken();
         User user = accountMapper.selectByEmailAndPassword(loginDTO);
 
         // 判断是否根据DTO找到用户信息
@@ -47,17 +48,13 @@ public class AccountServiceImpl implements AccountService {
         }
 
         // 找到用户信息, 构建JWT
-        String userId = user.getUserId();
-        String role;
-        if (userId.equals(Constant.adminId)) {
-            role = "admin";
-        } else {
-            role = "user";
-        }
+        int userId = user.getUserId();
         claims.put("userId", userId);
-        claims.put("role", role);
+        String token = JwtUtils.generateToken(claims);
 
-        return JwtUtils.generateToken(claims);
+        userAndToken.setToken(token);
+        userAndToken.setUserId(userId);
+        return userAndToken;
     }
 
     @Override

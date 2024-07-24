@@ -1,13 +1,17 @@
 package com.faken.aiproject.controller;
 
+import com.faken.aiproject.po.result.PageBean;
 import com.faken.aiproject.po.result.Result;
 import com.faken.aiproject.po.vo.ModelRankVO;
+
+import com.faken.aiproject.po.vo.PageQueryModelVO;
 import com.faken.aiproject.service.ModelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,7 +25,7 @@ public class ModelController {
     private ModelService modelService;
 
     @GetMapping("/modelRank")
-    public Result<?> modelRank() {
+    public Result<List<ModelRankVO>> modelRank() {
         List<ModelRankVO> listModelRankVO = modelService.modelRank();
         System.out.println(listModelRankVO);
         String msg = null;
@@ -32,6 +36,13 @@ public class ModelController {
             msg = "获取模型排行失败";
             return Result.error(msg);
         }
+    }
 
+    @GetMapping("/allModels")
+    public Result<PageBean<PageQueryModelVO>> allModels(@RequestParam("userId") int userId, @RequestParam("page") int page, @RequestParam("name") String name) {
+
+        PageBean<PageQueryModelVO> pageBean = modelService.pageQuery(userId, page, name);
+
+        return Result.success("", pageBean);
     }
 }

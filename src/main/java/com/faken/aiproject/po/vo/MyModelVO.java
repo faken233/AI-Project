@@ -16,5 +16,5 @@ public class MyModelVO {
     private String modelName;
     private int modelType;
     private int usedTimes;
-    private Date createdTime;
+    private String createdTime;
 }

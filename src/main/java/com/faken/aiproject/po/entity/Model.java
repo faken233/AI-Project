@@ -27,6 +27,6 @@ public class Model {
 
        private int usedTimes; //使用次数
 
-       private Date createTime; //上传时间
+       private String createTime; //上传时间
 
 }

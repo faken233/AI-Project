@@ -7,10 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelsAuth {
-   private int modelsAuthId; // 主键ID
+public class ModelAuth {
+
+   private int modelAuthId; // 主键ID
+
    private int modelId; //模型ID
+
    private int userId; //用户ID
+
    private int deletable; //是否有删除的权限
 
 }

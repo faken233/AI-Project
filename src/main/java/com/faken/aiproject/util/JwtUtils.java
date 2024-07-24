@@ -1,6 +1,5 @@
 package com.faken.aiproject.util;
 
-import com.faken.aiproject.constant.Constant;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 

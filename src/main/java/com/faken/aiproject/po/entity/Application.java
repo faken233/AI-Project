@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Application {
+
    private int applicationId; //主键ID
    private int applicantId; //申请人ID
    private int respondentId; //被申请人ID

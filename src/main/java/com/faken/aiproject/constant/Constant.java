@@ -13,7 +13,7 @@ public class Constant {
     public static final int TEXT_MODEL = 1;
 
     //模型是官方的还是用户的
-    public static final int  OFFICIA = 0;
+    public static final int  OFFICIAL = 0;
     public static final int  USER = 1;
 
     //申请表的申请状态

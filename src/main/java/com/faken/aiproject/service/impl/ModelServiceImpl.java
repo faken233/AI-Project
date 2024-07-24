@@ -1,7 +1,9 @@
 package com.faken.aiproject.service.impl;
 
+import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.mapper.ModelMapper;
 import com.faken.aiproject.po.entity.Model;
+import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.vo.ModelRankVO;
 import com.faken.aiproject.service.ModelService;
 import org.springframework.beans.BeanUtils;
@@ -38,9 +40,21 @@ public class ModelServiceImpl implements ModelService {
         if (i == 1){
             //插入成功
             int modelId = model.getModelId();
-            return modelMapper.insertModelUrl(modelId,url);//插入模型地址表
+            if (modelMapper.insertModelUrl(modelId,url) ==1 ){//插入模型地址表
+                ModelAuth modelAuth = new ModelAuth();
+                BeanUtils.copyProperties(model,modelAuth);
+                modelAuth.setDeletable(Constant.CAN_DELETE);
+                return modelMapper.insertModelAuth(modelAuth);//插入用户模型权利表
+            }else {
+                return 0;
+            }
         }else {
             return 0;
         }
+    }
+
+    @Override
+    public int deleteModel(String modelId) {
+        return modelMapper.deleteModelByModelId(modelId);
     }
 }

@@ -1,6 +1,7 @@
 package com.faken.aiproject.mapper;
 
 import com.faken.aiproject.po.entity.Model;
+import com.faken.aiproject.po.entity.ModelAuth;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface ModelMapper {
 
     @Insert("insert into model_url(model_id,url) values (#{modelId},#{url})")
     int insertModelUrl(@Param("modelId")int modelId,@Param("url") String url);
+
+    @Insert("insert into model_auth(model_id,user_id,deletable) values (#{modelId},#{userId},#{deletable})")
+    int insertModelAuth(ModelAuth modelAuth);
+
+    @Delete("delete from model ")
+    int deleteModelByModelId(String modelId);
 }

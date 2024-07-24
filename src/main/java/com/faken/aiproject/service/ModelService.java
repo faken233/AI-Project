@@ -9,4 +9,6 @@ public interface ModelService {
 
     List<ModelRankVO> modelRank();
     int uploadModel(Model model,String url);
+
+    int deleteModel(String modelId);
 }

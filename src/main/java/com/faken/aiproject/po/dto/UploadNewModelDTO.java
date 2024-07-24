@@ -3,13 +3,16 @@ package com.faken.aiproject.po.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UploadNewModelDTO {
-    private String characterType;
+    private String description;
     private String modelName;
-    private String createTime;
+    private int modelType;
+    private MultipartFile file;
+    private int userId;
 
 }

@@ -7,6 +7,7 @@ import com.faken.aiproject.po.result.PageBean;
 import com.faken.aiproject.po.result.Result;
 import com.faken.aiproject.po.vo.ModelRankVO;
 
+import com.faken.aiproject.po.vo.MyModelVO;
 import com.faken.aiproject.po.vo.PageQueryModelVO;
 import com.faken.aiproject.service.ModelService;
 import lombok.extern.slf4j.Slf4j;
@@ -101,6 +102,16 @@ public class ModelController {
             return Result.error("删除模型失败，请稍后再试");
         }
     }
+
+    @GetMapping("/myModel")
+    public Result<PageBean<MyModelVO>> myModel(@RequestParam("userId") int userId, @RequestParam("page") int page) {
+
+        PageBean<MyModelVO> pageBean = modelService.personalCenterPageQuery(userId, page);
+
+        return Result.success("", pageBean);
+    }
+
+
 
 
 }

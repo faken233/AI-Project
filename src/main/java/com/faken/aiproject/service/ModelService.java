@@ -3,6 +3,7 @@ package com.faken.aiproject.service;
 import com.faken.aiproject.po.result.PageBean;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.vo.ModelRankVO;
+import com.faken.aiproject.po.vo.MyModelVO;
 import com.faken.aiproject.po.vo.PageQueryModelVO;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface ModelService {
     int uploadModel(Model model,String url);
 
     int deleteModel(String modelId);
+
+    PageBean<MyModelVO> personalCenterPageQuery(int userId, int page);
 }

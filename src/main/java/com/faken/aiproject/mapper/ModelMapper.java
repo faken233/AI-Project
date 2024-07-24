@@ -2,7 +2,6 @@ package com.faken.aiproject.mapper;
 
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
-import com.faken.aiproject.po.entity.ModelAuth;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.*;
 
@@ -40,4 +39,7 @@ public interface ModelMapper {
 
     @Select("select * from model_auth where user_id = #{userId} and model_id = #{modelId}")
     ModelAuth selectByUserId(int userId, int modelId);
+
+    @Select("select * from model where user_id = #{userId} limit #{offset}, 6")
+    List<Model> personalCenterPageQuery(int userId, int offset);
 }

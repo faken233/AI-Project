@@ -5,8 +5,8 @@ import com.faken.aiproject.mapper.ModelMapper;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.result.PageBean;
-import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.vo.ModelRankVO;
+import com.faken.aiproject.po.vo.MyModelVO;
 import com.faken.aiproject.po.vo.PageQueryModelVO;
 import com.faken.aiproject.service.ModelService;
 import org.springframework.beans.BeanUtils;
@@ -30,10 +30,6 @@ public class ModelServiceImpl implements ModelService {
         ModelRankVO modelRankVO = null;
         for (Model model : listModel) {//包装VO类
             modelRankVO = new ModelRankVO();
-            BeanUtils.copyProperties(model, modelRankVO);
-//            modelRankVO.setCharacterType(model.getCharacterType());
-//            modelRankVO.setModelName(model.getModelName());
-//            modelRankVO.setCreateTime(model.getCreateTime());
             BeanUtils.copyProperties(model, modelRankVO);
             listModelRankVO.add(modelRankVO);
         }
@@ -74,6 +70,25 @@ public class ModelServiceImpl implements ModelService {
             return 0;
         }
 
+    }
+
+    @Override
+    public PageBean<MyModelVO> personalCenterPageQuery(int userId, int page) {
+        int offset = (page - 1) * 6;
+        List<Model> myModelVOS = modelMapper.personalCenterPageQuery(userId, offset);
+        List<MyModelVO> myModelVOList = new ArrayList<>();
+        PageBean<MyModelVO> pageBean = new PageBean<>();
+
+        long total = myModelVOS.size();
+
+        for (Model model : myModelVOS) {
+            MyModelVO myModelVO = new MyModelVO();
+            BeanUtils.copyProperties(model, myModelVO);
+            myModelVOList.add(myModelVO);
+        }
+        pageBean.setTotal(total);
+        pageBean.setData(myModelVOList);
+        return pageBean;
     }
 
     @Override

@@ -26,8 +26,8 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public List<ModelRankVO>  modelRank() {
         List<Model> listModel = modelMapper.selectByUsedTimes();//获取到根据使用频率前十个模型
-        List<ModelRankVO> listModelRankVO = new ArrayList<ModelRankVO>();//包装VO类的list集合
-        ModelRankVO modelRankVO = null;
+        List<ModelRankVO> listModelRankVO = new ArrayList<>();//包装VO类的list集合
+        ModelRankVO modelRankVO;
         for (Model model : listModel) {//包装VO类
             modelRankVO = new ModelRankVO();
             BeanUtils.copyProperties(model, modelRankVO);

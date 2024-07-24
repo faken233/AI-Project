@@ -34,15 +34,11 @@ public class ModelController {
     @Autowired
     private ModelService modelService;
 
-    /**
-     * 模型排行
-     * @return
-     */
     @GetMapping("/modelRank")
     public Result<List<ModelRankVO>> modelRank() {
         List<ModelRankVO> listModelRankVO = modelService.modelRank();
         System.out.println(listModelRankVO);
-        String msg = null;
+        String msg;
         if (listModelRankVO.size() > 0 && listModelRankVO != null) {//判断查询是否为空
             msg = "获取模型排行成功";
             return Result.success(msg,listModelRankVO);
@@ -60,11 +56,6 @@ public class ModelController {
         return Result.success("", pageBean);
     }
 
-    /**
-     * 上传新模型
-     * @param uploadNewModelDTO
-     * @return
-     */
     @PostMapping("/uploadNewModel")
     public Result<?> uploadNewModel(UploadNewModelDTO uploadNewModelDTO) {
         String url = "D:\\QG_project\\files\\";//设置本地地址，后面更改为服务器地址

@@ -21,13 +21,5 @@ public class Constant {
     public static final int APPLICATION_ACCEPT = 1;
     public static final int APPLICATION_REJECT = 2;
 
-    //申请人是否删除申请信息
-    public static final int APPLICANT_UNDELETED = 0;
-    public static final int APPLICANT_DELETED = 1;
-
-    //被申请人是否删除申请信息
-    public static final int RESPONDENT_UNDELETED = 0;
-    public static final int RESPONDENT_DELETED = 1;
-
 
 }

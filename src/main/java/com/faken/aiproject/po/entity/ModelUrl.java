@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ModelUrl {
-   private int modelUrlId; //主键ID
-   private int modelId; //模型名称
-   private String url; //模型文件地址
 
+   private int modelUrlId; //主键ID
+
+   private int modelId; //模型名称
+
+   private String url; //模型文件地址
 
 }

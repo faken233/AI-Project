@@ -13,29 +13,29 @@ public class Result<T> implements Serializable {
     private T data; //数据
 
     public static <T> Result<T> success() {
-        Result<T> result = new Result<T>();
+        Result<T> result = new Result<>();
         result.msg = null;
         result.code = 1;
         return result;
     }
 
     public static <T> Result<T> success(String msg) {
-        Result<T> result = new Result<T>();
+        Result<T> result = new Result<>();
         result.msg = msg;
         result.code = 1;
         return result;
     }
 
     public static <T> Result<T> success(String msg,T object) {
-        Result<T> result = new Result<T>();
+        Result<T> result = new Result<>();
         result.data = object;
         result.msg = msg;
         result.code = 1;
         return result;
     }
 
-    public static Result error(String msg) {
-        Result result = new Result();
+    public static Result<?> error(String msg) {
+        Result<?> result = new Result<>();
         result.msg = msg;
         result.code = 0;
         return result;

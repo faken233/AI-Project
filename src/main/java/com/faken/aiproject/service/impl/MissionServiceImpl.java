@@ -2,11 +2,14 @@ package com.faken.aiproject.service.impl;
 
 import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.mapper.MissionMapper;
+import com.faken.aiproject.po.dto.MissionDTO;
+import com.faken.aiproject.po.entity.Mission;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.entity.ModelUrl;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 import com.faken.aiproject.service.MissionService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +46,17 @@ public class MissionServiceImpl implements MissionService {
         //返回结果
         return list;
 
+    }
+
+    @Override
+    public int saveMission(MissionDTO missionDTO) {
+        Mission mission = new Mission();
+        BeanUtils.copyProperties(missionDTO, mission);
+        System.out.println(missionDTO);
+        mission.setModelList(missionDTO.getModelList().toString());
+        System.out.println(mission);
+        //插入任务列表
+//        missionMapper.insertNewMission();
+        return 0;
     }
 }

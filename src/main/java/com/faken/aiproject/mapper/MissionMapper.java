@@ -1,8 +1,10 @@
 package com.faken.aiproject.mapper;
 
+import com.faken.aiproject.po.dto.MissionDTO;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.entity.ModelUrl;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -25,5 +27,6 @@ public interface MissionMapper {
     @Select("select * from model_url where model_id = #{modelId}")
     public ModelUrl selectUrlByModelId(int modelId);
 
-
+//    @Insert("insert into mission(model_content,description,image_url,user_id,mission_name,answer) values(#{},#{description},#{imageUrl},#{userId},#{missionName},#{answer})")
+//    public int insertNewMission(MissionDTO missionDTO);
 }

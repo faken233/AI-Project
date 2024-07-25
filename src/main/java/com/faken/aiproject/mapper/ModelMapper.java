@@ -38,8 +38,8 @@ public interface ModelMapper {
     List<Model> pageQuery(@Param("offset") int offset, @Param("name") String name);
 
     @Select("select * from model_auth where user_id = #{userId} and model_id = #{modelId}")
-    ModelAuth selectByUserId(int userId, int modelId);
+    ModelAuth selectByUserId(@Param("userId") int userId, @Param("modelId") int modelId);
 
     @Select("select * from model where user_id = #{userId} limit #{offset}, 6")
-    List<Model> personalCenterPageQuery(int userId, int offset);
+    List<Model> personalCenterPageQuery(@Param("userId") int userId, @Param("offset") int offset);
 }

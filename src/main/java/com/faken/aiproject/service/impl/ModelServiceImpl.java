@@ -150,7 +150,8 @@ public class ModelServiceImpl implements ModelService {
            }
            BeanUtils.copyProperties(model, pageQueryModelVO);
            pageQueryModelVOS.add(pageQueryModelVO);
-       }
-       return pageBean;
+        }
+        pageBean.setData(pageQueryModelVOS);
+        return pageBean;
     }
 }

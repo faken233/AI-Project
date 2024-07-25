@@ -14,6 +14,7 @@ public interface ModelService {
     List<ModelRankVO> modelRank();
 
     PageBean<PageQueryModelVO> pageQuery(int userId, int page, String name);
+
     int uploadModel(UploadNewModelDTO uploadNewModelDTO) throws IOException;
 
     int deleteModel(String modelId);

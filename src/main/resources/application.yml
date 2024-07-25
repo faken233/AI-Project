@@ -22,3 +22,7 @@ email:
   password: ecxcdzqqmwslddcj
   username: 3087609114@qq.com
   port: 587
+huawei-obs:
+  ak: F915WYG9INM7JCMKWYA8
+  sk: bWMR0xxcVBxOA6URk86efzREAOXLzoZvu6lkU00M
+  end-point: https://obs.cn-south-1.myhuaweicloud.com

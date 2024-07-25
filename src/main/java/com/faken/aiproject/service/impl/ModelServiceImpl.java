@@ -10,15 +10,15 @@ import com.faken.aiproject.po.vo.ModelRankVO;
 import com.faken.aiproject.po.vo.MyModelVO;
 import com.faken.aiproject.po.vo.PageQueryModelVO;
 import com.faken.aiproject.service.ModelService;
+import com.faken.aiproject.util.HuaweiOBSUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,8 +26,13 @@ import java.util.UUID;
 
 @Service
 public class ModelServiceImpl implements ModelService {
+
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private HuaweiOBSUtils huaweiOBSUtils;
+
 
     @Override
     public List<ModelRankVO>  modelRank() {
@@ -46,32 +51,33 @@ public class ModelServiceImpl implements ModelService {
     @Override
     @Transactional
     public int uploadModel(UploadNewModelDTO uploadNewModelDTO) throws IOException {
-        // TODO 设置云端oss
-
-        String url = "D:\\QG_project\\files\\";//设置本地地址，后面更改为服务器地址
-        byte[] bytes = uploadNewModelDTO.getFile().getBytes();
         // 生成唯一的文件名
         String originalFilename = uploadNewModelDTO.getFile().getOriginalFilename();
-        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-        String uniqueFilename = UUID.randomUUID().toString() + "." + fileExtension;
+        String fileExtension = null;
+        if (originalFilename != null) {
+            fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        }
+        String uniqueFilename = UUID.randomUUID() + "." + fileExtension;
 
-        //设置文件路径，并下载到对应路径
-        Path path = Paths.get(url + uniqueFilename);
-        Files.write(path,bytes);
-        url = path.toString();
+        // 转化文件格式为File类型
+        File file = new File(uploadNewModelDTO.getFile().getOriginalFilename());
+        file.createNewFile();
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(uploadNewModelDTO.getFile().getBytes());
+        fileOutputStream.close();
+
+
+        huaweiOBSUtils.uploadToOBS(file, uniqueFilename);
+        String OBSUrl = generateOBSUrl(huaweiOBSUtils.getEndPoint(), huaweiOBSUtils.getBucketName(), uniqueFilename);
 
         Model model = new Model();
-//        model.setModelName(uploadNewModelDTO.getModelName());
-//        model.setModelType(uploadNewModelDTO.getModelType());
-//        model.setDescription(uploadNewModelDTO.getDescription());
-//        model.setUserId(uploadNewModelDTO.getUserId());
         BeanUtils.copyProperties(uploadNewModelDTO, model);
         model.setCharacterType(Constant.USER);
         int i  = modelMapper.insertModel(model);//插入模型表
         if (i == 1){
             //插入成功
             int modelId = model.getModelId();
-            if (modelMapper.insertModelUrl(modelId,url) == 1){//插入模型地址表
+            if (modelMapper.insertModelUrl(modelId,OBSUrl) == 1){//插入模型地址表
                 ModelAuth modelAuth = new ModelAuth();
                 BeanUtils.copyProperties(model,modelAuth);
                 modelAuth.setDeletable(Constant.CAN_DELETE);
@@ -82,6 +88,10 @@ public class ModelServiceImpl implements ModelService {
         }else {
             return 0;
         }
+    }
+
+    private String generateOBSUrl(String endPoint, String bucketName, String uniqueFilename) {
+        return "https://" + bucketName + "." + endPoint.substring(("http://").length()) + "/" + uniqueFilename;
     }
 
     @Override

@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class ModelServiceImpl implements ModelService {
@@ -49,8 +50,15 @@ public class ModelServiceImpl implements ModelService {
 
         String url = "D:\\QG_project\\files\\";//设置本地地址，后面更改为服务器地址
         byte[] bytes = uploadNewModelDTO.getFile().getBytes();
-        Path path = Paths.get(url + uploadNewModelDTO.getFile().getOriginalFilename());
+        // 生成唯一的文件名
+        String originalFilename = uploadNewModelDTO.getFile().getOriginalFilename();
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        String uniqueFilename = UUID.randomUUID().toString() + "." + fileExtension;
+
+        //设置文件路径，并下载到对应路径
+        Path path = Paths.get(url + uniqueFilename);
         Files.write(path,bytes);
+        url = path.toString();
 
         Model model = new Model();
 //        model.setModelName(uploadNewModelDTO.getModelName());

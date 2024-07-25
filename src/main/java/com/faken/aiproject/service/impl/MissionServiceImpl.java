@@ -10,6 +10,7 @@ import com.faken.aiproject.po.entity.Mission;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.entity.ModelUrl;
+import com.faken.aiproject.po.vo.RecentMissionVO;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 import com.faken.aiproject.service.MissionService;
 import org.springframework.beans.BeanUtils;
@@ -83,5 +84,17 @@ public class MissionServiceImpl implements MissionService {
             return 0;
         }
         return 0;
+    }
+
+    @Override
+    public List<RecentMissionVO> getHomePageRecentMission(int userId) {
+        List<Mission> missionList = missionMapper.selectRecentThreeMission(userId);
+        List<RecentMissionVO> list = new ArrayList<>();
+        for (Mission mission : missionList) {
+            RecentMissionVO recentMissionVO = new RecentMissionVO();
+            BeanUtils.copyProperties(mission, recentMissionVO);
+            list.add(recentMissionVO);
+        }
+        return list;
     }
 }

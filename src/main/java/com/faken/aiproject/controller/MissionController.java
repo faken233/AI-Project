@@ -2,6 +2,7 @@ package com.faken.aiproject.controller;
 
 import com.faken.aiproject.po.dto.MissionDTO;
 import com.faken.aiproject.po.result.Result;
+import com.faken.aiproject.po.vo.RecentMissionVO;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 import com.faken.aiproject.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,13 @@ public class MissionController {
         }else {
             return Result.error("任务上传失败");
         }
+    }
+
+    @GetMapping("/homePageRecentMission")
+    public Result<List<RecentMissionVO>> homePageRecentMission(@RequestParam("userId") int userId) {
+        List<RecentMissionVO> list = missionService.getHomePageRecentMission(userId);
+
+        return Result.success("", list);
     }
 
 

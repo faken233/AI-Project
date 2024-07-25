@@ -1,6 +1,7 @@
 package com.faken.aiproject.service;
 
 import com.faken.aiproject.po.dto.MissionDTO;
+import com.faken.aiproject.po.vo.RecentMissionVO;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface MissionService {
 
     //保存用户生成任务列表
     int saveMission(MissionDTO missionDTO);
+
+    List<RecentMissionVO> getHomePageRecentMission(int userId);
 }

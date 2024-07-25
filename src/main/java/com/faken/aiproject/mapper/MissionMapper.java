@@ -1,6 +1,5 @@
 package com.faken.aiproject.mapper;
 
-import com.faken.aiproject.po.dto.MissionDTO;
 import com.faken.aiproject.po.entity.Mission;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
@@ -23,11 +22,13 @@ public interface MissionMapper {
     @Select("select * from model where model_id = #{modelId}")
     public Model selectModelById(int modelId);
 
-
     //根据模型ID查找该模型的URL
     @Select("select * from model_url where model_id = #{modelId}")
     public ModelUrl selectUrlByModelId(int modelId);
 
     @Insert("insert into mission(model_list,content,image,user_id,mission_name,answer) values(#{modelList},#{content},#{image},#{userId},#{missionName},#{answer})")
     public int insertNewMission(Mission mission);
+
+    @Select("select * from mission where user_id = #{userId} order by mission_id desc limit 0, 3 ")
+    List<Mission> selectRecentThreeMission(int userId);
 }

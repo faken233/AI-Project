@@ -23,7 +23,7 @@ public class PageQueryModelVO {
 
     private int usedTimes;//
 
-    private String createdTime;//
+    private String createTime;//
 
     private int sign;
 

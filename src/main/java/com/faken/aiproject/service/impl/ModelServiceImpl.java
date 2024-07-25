@@ -91,7 +91,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     private String generateOBSUrl(String endPoint, String bucketName, String uniqueFilename) {
-        return "https://" + bucketName + "." + endPoint.substring(("http://").length()) + "/" + uniqueFilename;
+        return "https://" + bucketName + "." + endPoint.substring(("https://").length()) + "/Upload/" + uniqueFilename;
     }
 
     @Override
@@ -150,7 +150,8 @@ public class ModelServiceImpl implements ModelService {
            }
            BeanUtils.copyProperties(model, pageQueryModelVO);
            pageQueryModelVOS.add(pageQueryModelVO);
-       }
-       return pageBean;
+        }
+        pageBean.setData(pageQueryModelVOS);
+        return pageBean;
     }
 }

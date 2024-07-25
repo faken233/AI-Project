@@ -26,17 +26,17 @@ public class HuaweiOBSUtils {
     public void uploadToOBS(File file, String fileName) {
         PutObjectRequest request = new PutObjectRequest();
         request.setBucketName("qg23onnx");
-        request.setObjectKey(fileName);
+        request.setObjectKey("Upload/" + fileName);
         request.setFile(file);
         obsClient.putObject(request);
     }
 
     public String generateOBSUrl(String uniqueFilename) {
-        return "https://" + bucketName + "." + endPoint.substring(("http://").length()) + "/" + uniqueFilename;
+        return "https://" + bucketName + "." + endPoint.substring(("https://").length()) + "/Upload/" + uniqueFilename;
     }
 
     public String generateOBSUrl(String endPoint, String bucketName, String uniqueFilename) {
-        return "https://" + bucketName + "." + endPoint.substring(("http://").length()) + "/" + uniqueFilename;
+        return "https://" + bucketName + "." + endPoint.substring(("https://").length()) + "/Upload/" + uniqueFilename;
     }
 
 

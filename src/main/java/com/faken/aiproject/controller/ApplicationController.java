@@ -62,8 +62,8 @@ public class ApplicationController {
 
     //查询我的信息
     @GetMapping("/receivedApplication")
-    public Result<PageBean<ReceivedApplicationVO>> receivedApplication(@RequestParam("userId") int userId, @RequestParam("currentPage") int currentPage){
-        PageBean<ReceivedApplicationVO> selectAsRespondentApplicationByPage = applicationService.selectAsRespondentApplicationByPage(userId, currentPage);
+    public Result<PageBean<ReceivedApplicationVO>> receivedApplication(@RequestParam("userId") int userId, @RequestParam("page") int page){
+        PageBean<ReceivedApplicationVO> selectAsRespondentApplicationByPage = applicationService.selectAsRespondentApplicationByPage(userId, page);
         //返回结果
         return Result.success("success", selectAsRespondentApplicationByPage);
     }

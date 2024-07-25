@@ -2,7 +2,10 @@ package com.faken.aiproject.service.impl;
 
 import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.mapper.MissionMapper;
+import com.faken.aiproject.mapper.ModelMapper;
 import com.faken.aiproject.po.dto.MissionDTO;
+import com.faken.aiproject.po.dto.ModelListDTO;
+import com.faken.aiproject.po.dto.ModelsDTO;
 import com.faken.aiproject.po.entity.Mission;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
@@ -22,6 +25,8 @@ public class MissionServiceImpl implements MissionService {
 
     @Autowired
     private MissionMapper missionMapper;
+    @Autowired
+    private ModelMapper modelMapper;
 
     // 查询用户可以使用的模型并通过对该模型使用次数的降序
     @Override
@@ -50,13 +55,33 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public int saveMission(MissionDTO missionDTO) {
+        System.out.println(missionDTO);
         Mission mission = new Mission();
         BeanUtils.copyProperties(missionDTO, mission);
-        System.out.println(missionDTO);
         mission.setModelList(missionDTO.getModelList().toString());
         System.out.println(mission);
         //插入任务列表
-//        missionMapper.insertNewMission();
+        if(missionMapper.insertNewMission(mission) != 0) {
+            List<ModelListDTO> modelListDTOList = missionDTO.getModelList();
+            for (ModelListDTO modelListDTO : modelListDTOList) {
+                List<ModelsDTO> modelsDTOList = modelListDTO.getModels();
+                for (ModelsDTO modelsDTO : modelsDTOList) {
+                    String modelUrl = modelsDTO.getModelUrl();
+                    //通过模型url查找模型id
+                    ModelUrl model= modelMapper.selectModelByModelUrl(modelUrl);
+                    int modelId = model.getModelId();
+                    //根据模型id增加模型表模型使用次数
+                    if (0 != modelMapper.updateUsedTimesByModelId(modelId)){
+                        return  modelMapper.updateUsedTimesByModelIdAndUserId(missionDTO.getUserId(),modelId);
+                    }else {
+                        return 0;
+                    }
+
+                }
+            }
+        }else {
+            return 0;
+        }
         return 0;
     }
 }

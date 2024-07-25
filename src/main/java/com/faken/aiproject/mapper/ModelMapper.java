@@ -2,6 +2,7 @@ package com.faken.aiproject.mapper;
 
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
+import com.faken.aiproject.po.entity.ModelUrl;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.*;
 
@@ -42,4 +43,13 @@ public interface ModelMapper {
 
     @Select("select * from model where user_id = #{userId} limit #{offset}, 6")
     List<Model> personalCenterPageQuery(@Param("userId") int userId, @Param("offset") int offset);
+
+    @Select("select * from model_url where url = #{modelUrl}")
+    ModelUrl selectModelByModelUrl(String modelUrl);
+
+    @Update("update model set used_times = used_times + 1 where model_id = #{modelId}")
+    int updateUsedTimesByModelId(int modelId);
+
+    @Update("update model_auth set user_use_times = user_use_times + 1 where user_id = #{userId} and model_id = #{modelId}")
+    int updateUsedTimesByModelIdAndUserId(@Param("userId") int userId,@Param("modelId") int modelId);
 }

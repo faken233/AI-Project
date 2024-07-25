@@ -1,6 +1,7 @@
 package com.faken.aiproject.mapper;
 
 import com.faken.aiproject.po.dto.MissionDTO;
+import com.faken.aiproject.po.entity.Mission;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
 import com.faken.aiproject.po.entity.ModelUrl;
@@ -27,6 +28,6 @@ public interface MissionMapper {
     @Select("select * from model_url where model_id = #{modelId}")
     public ModelUrl selectUrlByModelId(int modelId);
 
-//    @Insert("insert into mission(model_content,description,image_url,user_id,mission_name,answer) values(#{},#{description},#{imageUrl},#{userId},#{missionName},#{answer})")
-//    public int insertNewMission(MissionDTO missionDTO);
+    @Insert("insert into mission(model_list,content,image,user_id,mission_name,answer) values(#{modelList},#{content},#{image},#{userId},#{missionName},#{answer})")
+    public int insertNewMission(Mission mission);
 }

@@ -31,7 +31,7 @@ public class MissionController {
     }
 
     @PostMapping("/saveMission")
-    public Result<?> saveMission(MissionDTO missionDTO) {
+    public Result<?> saveMission(@RequestBody MissionDTO missionDTO) {
         if (missionService.saveMission(missionDTO) != 0){
             return Result.success("任务上传成功");
         }else {

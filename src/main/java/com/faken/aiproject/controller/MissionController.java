@@ -24,7 +24,7 @@ public class MissionController {
      * @param userId
      * @return
      */
-    @GetMapping("/queryUserCanUserModel")
+    @GetMapping("/queryUserCanUseModel")
     public Result<List<UserCanUseModelVO>> queryUserCanUseModel(@RequestParam("userId") int userId){
         //进行业务查询
         List<UserCanUseModelVO> list = missionService.selectUserCanModel(userId);

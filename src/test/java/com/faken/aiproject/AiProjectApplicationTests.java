@@ -1,23 +1,24 @@
 package com.faken.aiproject;
 
-import com.faken.aiproject.controller.ModelController;
-import com.faken.aiproject.po.result.Result;
-import com.faken.aiproject.po.vo.ModelRankVO;
+import com.faken.aiproject.util.HuaweiOBSUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 class AiProjectApplicationTests {
 
+    @Autowired
+    private HuaweiOBSUtils huaweiOBSUtils;
+
     @Test
     void contextLoads() {
+//        huaweiOBSUtils.uploadToOBS(new File("HELP.md"), "1.txt");
     }
 
     @Test
     void testModelRank() {
-        Result<List<ModelRankVO>> modelRankVOResult = (Result<List<ModelRankVO>>) new ModelController().modelRank();
+
     }
 
 }

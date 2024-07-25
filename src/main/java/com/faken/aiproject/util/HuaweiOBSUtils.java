@@ -31,5 +31,13 @@ public class HuaweiOBSUtils {
         obsClient.putObject(request);
     }
 
+    public String generateOBSUrl(String uniqueFilename) {
+        return "https://" + bucketName + "." + endPoint.substring(("http://").length()) + "/" + uniqueFilename;
+    }
+
+    public String generateOBSUrl(String endPoint, String bucketName, String uniqueFilename) {
+        return "https://" + bucketName + "." + endPoint.substring(("http://").length()) + "/" + uniqueFilename;
+    }
+
 
 }

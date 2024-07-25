@@ -16,6 +16,8 @@ public class RequestInterceptor implements HandlerInterceptor {
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
         log.info("get one request, IP Address: {}", request.getRemoteAddr());
         String token = request.getParameter("Authorization");
+
+        // TODO 正式上线时将token验证打开
 //        return !JwtUtils.isTokenExpired(token);
         return true;
     }

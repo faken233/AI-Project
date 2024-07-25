@@ -17,4 +17,6 @@ public class ModelAuth {
 
    private int deletable; //是否有删除的权限
 
+   private int userUseTimes; //用户使用该模型的次数
+
 }

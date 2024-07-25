@@ -29,4 +29,6 @@ public class Model {
 
        private String createTime; //上传时间
 
+       private int bigModel; //是否为大模型
+
 }

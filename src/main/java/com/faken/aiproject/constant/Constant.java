@@ -21,19 +21,15 @@ public class Constant {
     public static final int APPLICATION_ACCEPT = 1;
     public static final int APPLICATION_REJECT = 2;
 
-    // 申请人是否删除申请信息
-    public static final int APPLICANT_UNDELETED = 0;
-    public static final int APPLICANT_DELETED = 1;
-
-    // 被申请人是否删除申请信息
-    public static final int RESPONDENT_UNDELETED = 0;
-    public static final int RESPONDENT_DELETED = 1;
-
     // 资源中心下操作按钮状态
     public static final int ACCESSED_MODEL = 1;
     public static final int APPLICABLE_MODEL = 0;
 
     // OSS地址
     public static final String OSS_URL = "";
+
+
+    //默认权重为1
+    public static final int DEFAULT_WEIGHT = 1;
 
 }

@@ -18,11 +18,6 @@ public class MissionController {
     private MissionService missionService;
 
 
-    /**
-     * 查询用户可以使用的模型并且根据用户的使用次数排序
-     * @param userId
-     * @return
-     */
     @GetMapping("/queryUserCanUseModel")
     public Result<List<UserCanUseModelVO>> queryUserCanUseModel(@RequestParam("userId") int userId){
         //进行业务查询

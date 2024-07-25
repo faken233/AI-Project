@@ -13,65 +13,65 @@ public interface ApplicationMapper {
 
     //通过用户ID查询有关于某个用户的总申请数量
     @Select("select count(*) from application where applicant_id = #{userId} or respondent_id = #{userId}")
-    public int selectAllApplicationCountByUserId(int userId);
+    int selectAllApplicationCountByUserId(int userId);
 
     //查询一个用户的各种状态申请的数量
     @Select("select count(*) from application where (applicant_id = #{userId} or respondent_id = #{userId}) and status = #{status}")
-    public int selectApplicationCountByUserIdAndStatus(@Param("userId") int userId, @Param("status") int status);
+    int selectApplicationCountByUserIdAndStatus(@Param("userId") int userId, @Param("status") int status);
 
 
     //添加申请权限
     @Insert("insert into application (applicant_id, respondent_id, model_id, status) values (#{applicantId},#{respondentId},#{modelId},#{status})")
-    public int addApplication(Application application);
+    int addApplication(Application application);
 
 
     // TODO Mapper位置?
     //通过模型id查找所拥有人的id
     @Select("select user_id from model where model_id = #{modelId}")
-    public int selectRespondentIdByModelId(int modelId);
+    int selectRespondentIdByModelId(int modelId);
 
 
     //查询我是被申请人的申请的总条数
     @Select("select count(*) from application where respondent_id = #{userId}")
-    public int asRespondentApplicationCount(int userId);
+    int asRespondentApplicationCount(int userId);
 
     //查询我是申请人的申请的总条数
     @Select("select count(*) from application where applicant_id = #{userId}")
-    public int asApplicantApplicationCount(int userId);
+    int asApplicantApplicationCount(int userId);
 
     //分页查询我是被申请人的申请
     @Select("select * from application where respondent_id = #{userId} order by status limit #{begin}, #{size} ")
-    public List<Application> selectAsRespondentApplicationByPage(@Param("userId") int userId, @Param("begin") int begin,@Param("size") int size);
+    List<Application> selectAsRespondentApplicationByPage(@Param("userId") int userId, @Param("begin") int begin, @Param("size") int size);
 
     //分页查询我是申请人的申请
     @Select("select * from application where applicant_id = #{userId} order by status limit #{begin}, #{size} ")
-    public List<Application> selectAsApplicantApplicationByPage(@Param("userId") int userId, @Param("begin") int begin,@Param("size") int size);
+    List<Application> selectAsApplicantApplicationByPage(@Param("userId") int userId, @Param("begin") int begin, @Param("size") int size);
 
     // TODO Mapper位置?
     //暂时，通过模型ID查找模型
     @Select("select * from model where model_id = #{modelId}")
-    public Model selectModelByModelId(int modelId);
+    Model selectModelByModelId(int modelId);
 
 
     // TODO Mapper位置?
     //暂时，通过id查找一个人
     @Select("select * from user where user_id = #{id}")
-    public User selectUserById(int id);
+    User selectUserById(int id);
 
     //根据申请的id查询这条申请
     @Select("select * from application where application_id = #{applicationId}")
-    public Application selectByApplicationId(int applicationId);
+    Application selectByApplicationId(int applicationId);
 
     @Update("update application set status = 1 where application_id = #{applicationId}")
-    public void changeApplicationStatusPass(int applicationId);
+    void changeApplicationStatusPass(int applicationId);
 
     // TODO Mapper位置?
     //添加一个用户权限信息
     @Insert("insert into model_auth (model_id, user_id, deletable) values (#{modelId}, #{userId}, 0)")
-    public int addModelAuth(ModelAuth modelAuth);
+    int addModelAuth(ModelAuth modelAuth);
 
     //拒绝申请
     @Update("update application set status = 2 where application_id = #{applicationId}")
-    public void changeApplicationStatusReject(int applicationId);
+    void changeApplicationStatusReject(int applicationId);
 
 }

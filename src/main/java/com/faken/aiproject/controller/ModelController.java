@@ -53,7 +53,6 @@ public class ModelController {
 
     @PostMapping("/uploadNewModel")
     public Result<?> uploadNewModel(UploadNewModelDTO uploadNewModelDTO) {
-        String url = "D:\\QG_project\\files\\";//设置本地地址，后面更改为服务器地址
         try {
             int count =modelService.uploadModel(uploadNewModelDTO);//进行模型数据插入数据库
             if (count == 1){

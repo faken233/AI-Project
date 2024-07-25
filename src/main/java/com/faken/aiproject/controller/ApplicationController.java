@@ -54,8 +54,8 @@ public class ApplicationController {
 
     //查询我的申请，我向别人发出申请
     @GetMapping("/myApplication")
-    public Result<PageBean<MyApplicationVO>> myApplication(@RequestParam("userId") int userId, @RequestParam("currentPage") int currentPage){
-        PageBean<MyApplicationVO> selectAsApplicantApplicationByPage = applicationService.selectAsApplicantApplicationByPage(userId, currentPage);
+    public Result<PageBean<MyApplicationVO>> myApplication(@RequestParam("userId") int userId, @RequestParam("page") int page){
+        PageBean<MyApplicationVO> selectAsApplicantApplicationByPage = applicationService.selectAsApplicantApplicationByPage(userId, page);
         //返回结果
         return Result.success("success", selectAsApplicantApplicationByPage);
     }

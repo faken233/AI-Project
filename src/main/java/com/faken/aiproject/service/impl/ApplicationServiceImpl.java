@@ -49,9 +49,11 @@ public class ApplicationServiceImpl implements ApplicationService {
         int count = applicationMapper.asApplicantApplicationCount(userId);
         pageBean.setTotal(count);
         begin = (begin - 1) * 6;
+
         //具体东西
         List<MyApplicationVO> list = new ArrayList<>();
         List<Application> applications = applicationMapper.selectAsApplicantApplicationByPage(userId, begin, 6);
+
         for (Application application : applications) {
             MyApplicationVO myApplicationVO = new MyApplicationVO();
             BeanUtils.copyProperties(application, myApplicationVO);
@@ -63,6 +65,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             myApplicationVO.setRespondentName(user.getUsername());
             list.add(myApplicationVO);
         }
+
         pageBean.setData(list);
         return pageBean;
     }

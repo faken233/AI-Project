@@ -116,14 +116,14 @@ public class ModelServiceImpl implements ModelService {
         List<MyModelVO> myModelVOList = new ArrayList<>();
         PageBean<MyModelVO> pageBean = new PageBean<>();
 
-        long total = myModelVOS.size();
+        int total = modelMapper.personalCenterPageQueryTotal(userId);
 
         for (Model model : myModelVOS) {
             MyModelVO myModelVO = new MyModelVO();
             BeanUtils.copyProperties(model, myModelVO);
             myModelVOList.add(myModelVO);
         }
-        pageBean.setTotal(total);
+        pageBean.setTotal((long) total);
         pageBean.setData(myModelVOList);
         return pageBean;
     }
@@ -135,7 +135,7 @@ public class ModelServiceImpl implements ModelService {
         List<PageQueryModelVO> pageQueryModelVOS = new ArrayList<>();
         PageBean<PageQueryModelVO> pageBean = new PageBean<>();
 
-        pageBean.setTotal((long) models.size());
+        pageBean.setTotal((long) modelMapper.allModelTotal());
 
         for (Model model : models) {
            PageQueryModelVO pageQueryModelVO = new PageQueryModelVO();

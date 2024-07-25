@@ -35,7 +35,6 @@ public interface ModelMapper {
     @Delete("delete from model_url where model_id = #{modelId}")
     int deleteModelUrlByModelId(String modelId);
 
-
     List<Model> pageQuery(@Param("offset") int offset, @Param("name") String name);
 
     @Select("select * from model_auth where user_id = #{userId} and model_id = #{modelId}")
@@ -52,4 +51,10 @@ public interface ModelMapper {
 
     @Update("update model_auth set user_use_times = user_use_times + 1 where user_id = #{userId} and model_id = #{modelId}")
     int updateUsedTimesByModelIdAndUserId(@Param("userId") int userId,@Param("modelId") int modelId);
+
+    @Select("select count(*) from model where user_id = #{userId}")
+    int personalCenterPageQueryTotal(@Param("userId") int userId);
+
+    @Select("select count(*) from model")
+    int allModelTotal();
 }

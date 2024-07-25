@@ -25,7 +25,7 @@ public interface ApplicationMapper {
     public int addApplication(Application application);
 
 
-    //暂时的
+    // TODO Mapper位置?
     //通过模型id查找所拥有人的id
     @Select("select user_id from model where model_id = #{modelId}")
     public int selectRespondentIdByModelId(int modelId);
@@ -47,11 +47,13 @@ public interface ApplicationMapper {
     @Select("select * from application where applicant_id = #{userId} order by status limit #{begin}, #{size} ")
     public List<Application> selectAsApplicantApplicationByPage(@Param("userId") int userId, @Param("begin") int begin,@Param("size") int size);
 
+    // TODO Mapper位置?
     //暂时，通过模型ID查找模型
     @Select("select * from model where model_id = #{modelId}")
     public Model selectModelByModelId(int modelId);
 
 
+    // TODO Mapper位置?
     //暂时，通过id查找一个人
     @Select("select * from user where user_id = #{id}")
     public User selectUserById(int id);
@@ -63,6 +65,7 @@ public interface ApplicationMapper {
     @Update("update application set status = 1 where application_id = #{applicationId}")
     public void changeApplicationStatusPass(int applicationId);
 
+    // TODO Mapper位置?
     //添加一个用户权限信息
     @Insert("insert into model_auth (model_id, user_id, deletable) values (#{modelId}, #{userId}, 0)")
     public int addModelAuth(ModelAuth modelAuth);

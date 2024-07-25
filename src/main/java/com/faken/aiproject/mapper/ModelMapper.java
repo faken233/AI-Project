@@ -14,7 +14,6 @@ public interface ModelMapper {
     @Select("select * from model order by  used_times DESC limit 10 ")
     List<Model> selectByUsedTimes();
 
-
     @Options(useGeneratedKeys = true,keyProperty = "modelId")
     @Insert("insert into model(user_id,model_name,model_type,description,character_type) " +
             "values (#{userId},#{modelName},#{modelType},#{description},#{characterType})")

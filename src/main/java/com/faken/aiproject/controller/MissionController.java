@@ -1,13 +1,11 @@
 package com.faken.aiproject.controller;
 
+import com.faken.aiproject.po.dto.MissionDTO;
 import com.faken.aiproject.po.result.Result;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 import com.faken.aiproject.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,15 @@ public class MissionController {
         List<UserCanUseModelVO> list = missionService.selectUserCanModel(userId);
         //返回结果
         return Result.success("success", list);
+    }
+
+    @PostMapping("/saveMission")
+    public Result<?> saveMission(MissionDTO missionDTO) {
+        if (missionService.saveMission(missionDTO) != 0){
+            return Result.success("任务上传成功");
+        }else {
+            return Result.error("任务上传失败");
+        }
     }
 
 

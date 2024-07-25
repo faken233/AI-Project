@@ -1,5 +1,6 @@
 package com.faken.aiproject.controller;
 
+import com.faken.aiproject.po.dto.MissionDTO;
 import com.faken.aiproject.po.dto.UploadNewModelDTO;
 import com.faken.aiproject.po.result.PageBean;
 import com.faken.aiproject.po.result.Result;
@@ -87,11 +88,7 @@ public class ModelController {
         return Result.success("", pageBean);
     }
 
-    @PostMapping("/test")
-    public Result<?> test(@RequestBody String description,@RequestBody String dataresult,@RequestBody MultipartFile file) {
-        System.out.println(dataresult);
-        return Result.success(dataresult);
-    }
+
 
 
 

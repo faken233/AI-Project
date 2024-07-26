@@ -1,6 +1,7 @@
 package com.faken.aiproject.service.impl;
 
 import com.faken.aiproject.constant.Constant;
+import com.faken.aiproject.mapper.ApplicationMapper;
 import com.faken.aiproject.mapper.ModelMapper;
 import com.faken.aiproject.po.dto.UploadNewModelDTO;
 import com.faken.aiproject.po.entity.Model;
@@ -32,6 +33,9 @@ public class ModelServiceImpl implements ModelService {
 
     @Autowired
     private HuaweiOBSUtils huaweiOBSUtils;
+
+    @Autowired
+    private ApplicationMapper applicationMapper;
 
 
     @Override
@@ -139,16 +143,23 @@ public class ModelServiceImpl implements ModelService {
 
         // 进行模型的申请状态判断
         for (Model model : models) {
-           PageQueryModelVO pageQueryModelVO = new PageQueryModelVO();
-           ModelAuth modelAuth = modelMapper.selectByUserId(userId, model.getModelId());
+            int modelId = model.getModelId();
+            PageQueryModelVO pageQueryModelVO = new PageQueryModelVO();
+           ModelAuth modelAuth = modelMapper.selectByUserId(userId, modelId);
 
            if (!Objects.isNull(modelAuth)) {
                // 依据用户ID和模型ID可以在权限表中查到模型, 说明用户通过了申请
                // 或者模型是他自己的, 或者他已将官方模型加入自己的库, 为可使用模型
                pageQueryModelVO.setSign(Constant.ACCESSED_MODEL);
            } else {
-               // 查不到, 说明模型非用户所有, 或者申请未通过, 为可申请模型
-               pageQueryModelVO.setSign(Constant.APPLICABLE_MODEL);
+               // 查不到, 说明模型非用户所有, 或者申请未通过
+               // 申请未通过, 则可以在申请表内查询到模型数据
+               if (applicationMapper.selectByApplicantIdAndModelId(userId, modelId) != null) {
+                   pageQueryModelVO.setSign(Constant.REMAINING_MODEL);
+               } else {
+                   // 申请表查询不到数据, 为可申请模型
+                   pageQueryModelVO.setSign(Constant.APPLICABLE_MODEL);
+               }
            }
 
            BeanUtils.copyProperties(model, pageQueryModelVO);

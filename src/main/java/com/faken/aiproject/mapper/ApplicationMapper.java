@@ -74,4 +74,6 @@ public interface ApplicationMapper {
     @Update("update application set status = 2 where application_id = #{applicationId}")
     void changeApplicationStatusReject(int applicationId);
 
+    @Select("select * from application where applicant_id = #{userId} and model_id = #{modelId}")
+    Application selectByApplicantIdAndModelId(int userId, int modelId);
 }

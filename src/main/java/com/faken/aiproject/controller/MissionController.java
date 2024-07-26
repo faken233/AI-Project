@@ -42,6 +42,11 @@ public class MissionController {
         return Result.success("", list);
     }
 
-
+    @GetMapping("/workspaceMission")
+    public Result<List<MissionDTO>> workspaceMission(@RequestParam("userId") int userId) {
+        List<MissionDTO> getWorkspaceMission = missionService.getWorkspaceMission(userId);
+        System.out.println(getWorkspaceMission);
+        return Result.success("",  getWorkspaceMission);
+    }
 
 }

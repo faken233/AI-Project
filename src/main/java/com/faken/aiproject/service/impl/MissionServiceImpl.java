@@ -1,11 +1,12 @@
 package com.faken.aiproject.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.mapper.MissionMapper;
 import com.faken.aiproject.mapper.ModelMapper;
 import com.faken.aiproject.po.dto.MissionDTO;
+import com.faken.aiproject.po.dto.ModelDTO;
 import com.faken.aiproject.po.dto.ModelListDTO;
-import com.faken.aiproject.po.dto.ModelsDTO;
 import com.faken.aiproject.po.entity.Mission;
 import com.faken.aiproject.po.entity.Model;
 import com.faken.aiproject.po.entity.ModelAuth;
@@ -56,17 +57,22 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public int saveMission(MissionDTO missionDTO) {
-        System.out.println(missionDTO);
+
         Mission mission = new Mission();
+
         BeanUtils.copyProperties(missionDTO, mission);
-        mission.setModelList(missionDTO.getModelList().toString());
+        List<ModelListDTO> modelList = missionDTO.getModelList();
+        String modelListJsonString = JSON.toJSONString(modelList);
+        mission.setModelList(modelListJsonString);
+
+
         System.out.println(mission);
         //插入任务列表
         if(missionMapper.insertNewMission(mission) != 0) {
             List<ModelListDTO> modelListDTOList = missionDTO.getModelList();
             for (ModelListDTO modelListDTO : modelListDTOList) {
-                List<ModelsDTO> modelsDTOList = modelListDTO.getModels();
-                for (ModelsDTO modelsDTO : modelsDTOList) {
+                List<ModelDTO> modelsDTOList = modelListDTO.getModels();
+                for (ModelDTO modelsDTO : modelsDTOList) {
                     String modelUrl = modelsDTO.getModelUrl();
                     //通过模型url查找模型id
                     ModelUrl model= modelMapper.selectModelByModelUrl(modelUrl);
@@ -77,7 +83,6 @@ public class MissionServiceImpl implements MissionService {
                     }else {
                         return 0;
                     }
-
                 }
             }
         }else {
@@ -94,6 +99,20 @@ public class MissionServiceImpl implements MissionService {
             RecentMissionVO recentMissionVO = new RecentMissionVO();
             BeanUtils.copyProperties(mission, recentMissionVO);
             list.add(recentMissionVO);
+        }
+        return list;
+    }
+
+    @Override
+    public List<MissionDTO> getWorkspaceMission(int userId) {
+        List<Mission> missionList = missionMapper.selectMissionByUserId(userId);
+        List<MissionDTO> list = new ArrayList<>();
+        for (Mission mission : missionList) {
+            MissionDTO missionDTO = new MissionDTO();
+            BeanUtils.copyProperties(mission, missionDTO);
+            List<ModelListDTO> modelListDTOS = JSON.parseArray(mission.getModelList(), ModelListDTO.class);
+            missionDTO.setModelList(modelListDTOS);
+            list.add(missionDTO);
         }
         return list;
     }

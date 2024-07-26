@@ -17,7 +17,6 @@ public interface MissionMapper {
     @Select("select * from model_auth where user_id = #{userId} order by user_use_times DESC")
     List<ModelAuth> selectUserCanModel(int userId);
 
-
     //根据模型ID查找该模型
     @Select("select * from model where model_id = #{modelId}")
     Model selectModelById(int modelId);
@@ -31,4 +30,7 @@ public interface MissionMapper {
 
     @Select("select * from mission where user_id = #{userId} order by mission_id desc limit 0, 3 ")
     List<Mission> selectRecentThreeMission(int userId);
+
+    @Select("select * from mission where user_id = #{userId}")
+    List<Mission> selectMissionByUserId(int userId);
 }

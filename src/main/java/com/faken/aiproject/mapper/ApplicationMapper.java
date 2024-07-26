@@ -75,5 +75,5 @@ public interface ApplicationMapper {
     void changeApplicationStatusReject(int applicationId);
 
     @Select("select * from application where applicant_id = #{userId} and model_id = #{modelId}")
-    Application selectByApplicantIdAndModelId(int userId, int modelId);
+    Application selectByApplicantIdAndModelId(@Param("userId") int userId, @Param("modelId") int modelId);
 }

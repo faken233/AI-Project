@@ -15,4 +15,6 @@ public interface MissionService {
     int saveMission(MissionDTO missionDTO);
 
     List<RecentMissionVO> getHomePageRecentMission(int userId);
+
+    List<MissionDTO> getWorkspaceMission(int userId);
 }

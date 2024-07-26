@@ -12,5 +12,5 @@ import java.util.List;
 public class ModelListDTO {
     private int layer;
     private String parallel;
-    private List<ModelsDTO> models;
+    private List<ModelDTO> models;
 }

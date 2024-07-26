@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelsDTO {
+public class ModelDTO {
     private String modelName;
     private String modelUrl;
     private int isAPI;

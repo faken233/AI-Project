@@ -155,6 +155,7 @@ public class ModelServiceImpl implements ModelService {
                // 查不到, 说明模型非用户所有, 或者申请未通过
                // 申请未通过, 则可以在申请表内查询到模型数据
                if (applicationMapper.selectByApplicantIdAndModelId(userId, modelId) != null) {
+                   // TODO
                    pageQueryModelVO.setSign(Constant.REMAINING_MODEL);
                } else {
                    // 申请表查询不到数据, 为可申请模型

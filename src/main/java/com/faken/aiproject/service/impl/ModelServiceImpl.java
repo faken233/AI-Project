@@ -36,8 +36,8 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public List<ModelRankVO>  modelRank() {
-        List<Model> listModel = modelMapper.selectByUsedTimes();//获取到根据使用频率前十个模型
-        List<ModelRankVO> listModelRankVO = new ArrayList<>();//包装VO类的list集合
+        List<Model> listModel = modelMapper.selectByUsedTimes();// 获取到根据使用频率前十个模型
+        List<ModelRankVO> listModelRankVO = new ArrayList<>();// 包装VO类的list集合
         ModelRankVO modelRankVO;
         for (Model model : listModel) {//包装VO类
             modelRankVO = new ModelRankVO();
@@ -73,9 +73,9 @@ public class ModelServiceImpl implements ModelService {
         Model model = new Model();
         BeanUtils.copyProperties(uploadNewModelDTO, model);
         model.setCharacterType(Constant.USER);
-        int i  = modelMapper.insertModel(model);//插入模型表
+        int i  = modelMapper.insertModel(model);// 插入模型表
         if (i == 1){
-            //插入成功
+            // 插入成功
             int modelId = model.getModelId();
             if (modelMapper.insertModelUrl(modelId,OBSUrl) == 1){//插入模型地址表
                 ModelAuth modelAuth = new ModelAuth();
@@ -111,7 +111,7 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public PageBean<MyModelVO> personalCenterPageQuery(int userId, int page) {
-        int offset = (page - 1) * 6;
+        int offset = (page - 1) * Constant.DEFAULT_PAGE_SIZE;
         List<Model> myModelVOS = modelMapper.personalCenterPageQuery(userId, offset);
         List<MyModelVO> myModelVOList = new ArrayList<>();
         PageBean<MyModelVO> pageBean = new PageBean<>();
@@ -130,16 +130,18 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public PageBean<PageQueryModelVO> pageQuery(int userId, int page, String name) {
-        int offset = (page - 1) * 6;
+        int offset = (page - 1) * Constant.DEFAULT_PAGE_SIZE;
         List<Model> models = modelMapper.pageQuery(offset, name);
         List<PageQueryModelVO> pageQueryModelVOS = new ArrayList<>();
         PageBean<PageQueryModelVO> pageBean = new PageBean<>();
 
         pageBean.setTotal((long) modelMapper.allModelTotal());
 
+        // 进行模型的申请状态判断
         for (Model model : models) {
            PageQueryModelVO pageQueryModelVO = new PageQueryModelVO();
            ModelAuth modelAuth = modelMapper.selectByUserId(userId, model.getModelId());
+
            if (!Objects.isNull(modelAuth)) {
                // 依据用户ID和模型ID可以在权限表中查到模型, 说明用户通过了申请
                // 或者模型是他自己的, 或者他已将官方模型加入自己的库, 为可使用模型
@@ -148,6 +150,7 @@ public class ModelServiceImpl implements ModelService {
                // 查不到, 说明模型非用户所有, 或者申请未通过, 为可申请模型
                pageQueryModelVO.setSign(Constant.APPLICABLE_MODEL);
            }
+
            BeanUtils.copyProperties(model, pageQueryModelVO);
            pageQueryModelVOS.add(pageQueryModelVO);
         }

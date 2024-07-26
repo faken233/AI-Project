@@ -25,11 +25,9 @@ public class Constant {
     public static final int ACCESSED_MODEL = 1;
     public static final int APPLICABLE_MODEL = 0;
 
-    // OSS地址
-    public static final String OSS_URL = "";
-
-
-    //默认权重为1
+    // 默认权重为1
     public static final int DEFAULT_WEIGHT = 1;
 
+    // 默认分页查询的每一页记录数
+    public static final int DEFAULT_PAGE_SIZE = 6;
 }

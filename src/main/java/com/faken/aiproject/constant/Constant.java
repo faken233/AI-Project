@@ -20,8 +20,9 @@ public class Constant {
     public static final int APPLICATION_REJECT = 2;
 
     // 资源中心下操作按钮状态
-    public static final int ACCESSED_MODEL = 1;
     public static final int APPLICABLE_MODEL = 0;
+    public static final int ACCESSED_MODEL = 1;
+    public static final int REMAINING_MODEL = 2;
 
     // 默认权重为1
     public static final int DEFAULT_WEIGHT = 1;

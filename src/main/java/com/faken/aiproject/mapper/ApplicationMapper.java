@@ -66,8 +66,8 @@ public interface ApplicationMapper {
     void changeApplicationStatusPass(int applicationId);
 
     // TODO Mapper位置?
-    //添加一个用户权限信息
-    @Insert("insert into model_auth (model_id, user_id, deletable) values (#{modelId}, #{userId}, 0)")
+    //添加一个用户申请通过的权限信息
+    @Insert("insert into model_auth (model_id, user_id, deletable) values (#{modelId}, #{userId}, #{deletable})")
     int addModelAuth(ModelAuth modelAuth);
 
     //拒绝申请

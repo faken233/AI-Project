@@ -1,5 +1,6 @@
 package com.faken.aiproject.service;
 
+import com.faken.aiproject.po.dto.ApplyModelDTO;
 import com.faken.aiproject.po.entity.Application;
 import com.faken.aiproject.po.entity.PageBean;
 import com.faken.aiproject.po.vo.MyApplicationVO;
@@ -16,7 +17,7 @@ public interface ApplicationService {
 
 
     //添加申请消息
-    int addApplication(Application application);
+    int addApplication(ApplyModelDTO applyModelDTO);
 
     //分页查询我是申请人的申请
     PageBean<MyApplicationVO> selectAsApplicantApplicationByPage(int userId, int begin);

@@ -42,9 +42,7 @@ public class ApplicationController {
     //添加申请模型权限
     @PostMapping("/applyModel")
     public Result<?> applyModel(@RequestBody ApplyModelDTO applyModelDTO){
-        Application application = new Application();
-        BeanUtils.copyProperties(applyModelDTO,application);
-        int i = applicationService.addApplication(application);
+        int i = applicationService.addApplication(applyModelDTO);
         if(i == 0){
             return Result.error("失败添加申请模型权限");
         }

@@ -1,6 +1,8 @@
 package com.faken.aiproject.service.impl;
 
+import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.mapper.ApplicationMapper;
+import com.faken.aiproject.po.dto.ApplyModelDTO;
 import com.faken.aiproject.po.entity.*;
 import com.faken.aiproject.po.vo.MyApplicationVO;
 import com.faken.aiproject.po.vo.ReceivedApplicationVO;
@@ -32,13 +34,27 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     //添加一个申请
     @Override
-    public int addApplication(Application application) {
-        application.setStatus(0);
-        int i = applicationMapper.selectRespondentIdByModelId(application.getModelId());
-        application.setRespondentId(i);
-        //不为0则表示添加成功
-        return applicationMapper.addApplication(application);
-
+    public int addApplication(ApplyModelDTO applyModelDTO) {
+        Model model = applicationMapper.selectModelByModelId(applyModelDTO.getModelId());
+        if (model.getCharacterType() == 0){
+            //该模型是官方的
+            ModelAuth modelAuth = new ModelAuth();
+            modelAuth.setUserId(applyModelDTO.getUserId());
+            modelAuth.setModelId(applyModelDTO.getModelId());
+            modelAuth.setDeletable(Constant.CANNOT_DELETE);
+            int i = applicationMapper.addModelAuth(modelAuth);
+            //申请官方模型成功
+            return i;
+        }else if (model.getCharacterType() == 1){
+            Application application = new Application();
+            application.setApplicantId(applyModelDTO.getUserId());
+            application.setModelId(model.getModelId());
+            application.setRespondentId(model.getUserId());
+            application.setStatus(Constant.APPLICATION_PENDING);
+            int i = applicationMapper.addApplication(application);
+            return i;
+        }
+        return 0;
     }
 
     //分页查询用户的我的申请

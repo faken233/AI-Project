@@ -16,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,15 +65,13 @@ public class ModelServiceImpl implements ModelService {
         String uniqueFilename = UUID.randomUUID() + "." + fileExtension;
 
         // 转化文件格式为File类型
-        File file = new File(uploadNewModelDTO.getFile().getOriginalFilename());
-        file.createNewFile();
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(uploadNewModelDTO.getFile().getBytes());
-        fileOutputStream.close();
-
+        // TODO
+        File file = convertMultipartFileToFile(uploadNewModelDTO.getFile());
 
         huaweiOBSUtils.uploadToOBS(file, uniqueFilename);
         String OBSUrl = generateOBSUrl(huaweiOBSUtils.getEndPoint(), huaweiOBSUtils.getBucketName(), uniqueFilename);
+        // 及时删除文件
+        file.delete();
 
         Model model = new Model();
         BeanUtils.copyProperties(uploadNewModelDTO, model);
@@ -92,6 +91,14 @@ public class ModelServiceImpl implements ModelService {
         }else {
             return 0;
         }
+    }
+
+    private File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
+        File tempFile = File.createTempFile("temp", multipartFile.getOriginalFilename());
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            fos.write(multipartFile.getBytes());
+        }
+        return tempFile;
     }
 
     private String generateOBSUrl(String endPoint, String bucketName, String uniqueFilename) {

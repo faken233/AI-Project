@@ -28,19 +28,21 @@ public class CommonController {
         String uniqueFilename = UUID.randomUUID() + "." + fileExtension;
 
         // 转化文件格式为File类型
-        File file = null;
-        if (originalFilename != null) {
-            file = new File(originalFilename);
-        }
-        file.createNewFile();
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(multipartFile.getBytes());
-        fileOutputStream.close();
+        File file = convertMultipartFileToFile(multipartFile);
 
         huaweiOBSUtils.uploadToOBS(file, uniqueFilename);
         String url = huaweiOBSUtils.generateOBSUrl(uniqueFilename);
 
+        file.delete();
         return Result.success("", url);
+    }
+
+    private File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
+        File tempFile = File.createTempFile("temp", multipartFile.getOriginalFilename());
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            fos.write(multipartFile.getBytes());
+        }
+        return tempFile;
     }
 
 }

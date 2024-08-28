@@ -8,7 +8,6 @@ import com.faken.aiproject.po.vo.MyModelVO;
 import com.faken.aiproject.po.vo.PageQueryModelVO;
 import com.faken.aiproject.service.ModelService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -20,8 +19,11 @@ import java.util.List;
 public class ModelController {
 
 
-    @Autowired
-    private ModelService modelService;
+    private final ModelService modelService;
+
+    public ModelController(ModelService modelService) {
+        this.modelService = modelService;
+    }
 
     @GetMapping("/modelRank")
     public Result<List<ModelRankVO>> modelRank() {

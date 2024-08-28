@@ -9,7 +9,6 @@ import com.faken.aiproject.po.vo.AllApplicationTypeVO;
 import com.faken.aiproject.po.vo.MyApplicationVO;
 import com.faken.aiproject.po.vo.ReceivedApplicationVO;
 import com.faken.aiproject.service.ApplicationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +19,11 @@ import javax.validation.constraints.NotNull;
 @Validated
 public class ApplicationController {
 
-    @Autowired
-    private ApplicationService applicationService;
+    private final ApplicationService applicationService;
+
+    public ApplicationController(ApplicationService applicationService) {
+        this.applicationService = applicationService;
+    }
 
 
     //首页查询各种类型的申请数量

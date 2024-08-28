@@ -5,7 +5,6 @@ import com.faken.aiproject.po.result.Result;
 import com.faken.aiproject.po.vo.RecentMissionVO;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 import com.faken.aiproject.service.MissionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +13,11 @@ import java.util.List;
 @RequestMapping("/mission")
 public class MissionController {
 
-    @Autowired
-    private MissionService missionService;
+    private final MissionService missionService;
+
+    public MissionController(MissionService missionService) {
+        this.missionService = missionService;
+    }
 
 
     @GetMapping("/queryUserCanUseModel")

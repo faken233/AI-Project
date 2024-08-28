@@ -13,7 +13,6 @@ import com.faken.aiproject.po.vo.PageQueryModelVO;
 import com.faken.aiproject.service.ModelService;
 import com.faken.aiproject.util.HuaweiOBSUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,14 +28,17 @@ import java.util.UUID;
 @Service
 public class ModelServiceImpl implements ModelService {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private HuaweiOBSUtils huaweiOBSUtils;
+    private final HuaweiOBSUtils huaweiOBSUtils;
 
-    @Autowired
-    private ApplicationMapper applicationMapper;
+    private final ApplicationMapper applicationMapper;
+
+    public ModelServiceImpl(ModelMapper modelMapper, HuaweiOBSUtils huaweiOBSUtils, ApplicationMapper applicationMapper) {
+        this.modelMapper = modelMapper;
+        this.huaweiOBSUtils = huaweiOBSUtils;
+        this.applicationMapper = applicationMapper;
+    }
 
 
     @Override

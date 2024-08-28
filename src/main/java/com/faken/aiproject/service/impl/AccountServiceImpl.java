@@ -11,29 +11,34 @@ import com.faken.aiproject.properties.MailProperties;
 import com.faken.aiproject.service.AccountService;
 import com.faken.aiproject.util.JwtUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    private AccountMapper accountMapper;
+    private final AccountMapper accountMapper;
 
-    @Autowired
-    private MailSender mailSender;
+    private final MailSender mailSender;
 
-    @Autowired
-    private MailProperties mailProperties;
+    private final MailProperties mailProperties;
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
+
+    public AccountServiceImpl(AccountMapper accountMapper, MailSender mailSender, MailProperties mailProperties, RedisTemplate<String, String> redisTemplate) {
+        this.accountMapper = accountMapper;
+        this.mailSender = mailSender;
+        this.mailProperties = mailProperties;
+        this.redisTemplate = redisTemplate;
+    }
 
 
     @Override

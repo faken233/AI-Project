@@ -8,7 +8,6 @@ import com.faken.aiproject.po.vo.MyApplicationVO;
 import com.faken.aiproject.po.vo.ReceivedApplicationVO;
 import com.faken.aiproject.service.ApplicationService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,8 +16,11 @@ import java.util.List;
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
 
-    @Autowired
-    private ApplicationMapper applicationMapper;
+    private final ApplicationMapper applicationMapper;
+
+    public ApplicationServiceImpl(ApplicationMapper applicationMapper) {
+        this.applicationMapper = applicationMapper;
+    }
 
     //查询一个用户的各种状态申请的数量
     @Override
@@ -42,17 +44,15 @@ public class ApplicationServiceImpl implements ApplicationService {
             modelAuth.setUserId(applyModelDTO.getUserId());
             modelAuth.setModelId(applyModelDTO.getModelId());
             modelAuth.setDeletable(Constant.CANNOT_DELETE);
-            int i = applicationMapper.addModelAuth(modelAuth);
             //申请官方模型成功
-            return i;
+            return applicationMapper.addModelAuth(modelAuth);
         }else if (model.getCharacterType() == 1){
             Application application = new Application();
             application.setApplicantId(applyModelDTO.getUserId());
             application.setModelId(model.getModelId());
             application.setRespondentId(model.getUserId());
             application.setStatus(Constant.APPLICATION_PENDING);
-            int i = applicationMapper.addApplication(application);
-            return i;
+            return applicationMapper.addApplication(application);
         }
         return 0;
     }
@@ -123,10 +123,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         modelAuth.setModelId(application.getModelId()); //模型id
         modelAuth.setUserId(application.getApplicantId());
         int i = applicationMapper.addModelAuth(modelAuth);
-        if (i == 0){
-            return false;
-        }
-        return true;
+        return i != 0;
     }
 
     //拒绝申请

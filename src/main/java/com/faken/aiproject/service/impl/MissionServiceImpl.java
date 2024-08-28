@@ -15,7 +15,6 @@ import com.faken.aiproject.po.vo.RecentMissionVO;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 import com.faken.aiproject.service.MissionService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,11 +23,13 @@ import java.util.List;
 @Service
 public class MissionServiceImpl implements MissionService {
 
+    private final MissionMapper missionMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private MissionMapper missionMapper;
-    @Autowired
-    private ModelMapper modelMapper;
+    public MissionServiceImpl(MissionMapper missionMapper, ModelMapper modelMapper) {
+        this.missionMapper = missionMapper;
+        this.modelMapper = modelMapper;
+    }
 
     // 查询用户可以使用的模型并通过对该模型使用次数的降序
     @Override

@@ -9,8 +9,8 @@ spring:
     datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
-      password: 123456
-      url: jdbc:mysql://localhost:3306/ai_db
+      password: xieguangqiang
+      url: jdbc:mysql://localhost:3306/ai_mid_exam_24
     redis:
       host: localhost
       port: 6379

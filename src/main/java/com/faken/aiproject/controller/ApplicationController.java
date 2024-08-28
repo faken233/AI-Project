@@ -3,19 +3,21 @@ package com.faken.aiproject.controller;
 import com.faken.aiproject.constant.Constant;
 import com.faken.aiproject.po.dto.ApplyModelDTO;
 import com.faken.aiproject.po.dto.HandlerApplicationDTO;
-import com.faken.aiproject.po.entity.Application;
 import com.faken.aiproject.po.entity.PageBean;
 import com.faken.aiproject.po.result.Result;
 import com.faken.aiproject.po.vo.AllApplicationTypeVO;
 import com.faken.aiproject.po.vo.MyApplicationVO;
 import com.faken.aiproject.po.vo.ReceivedApplicationVO;
 import com.faken.aiproject.service.ApplicationService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/application")
+@Validated
 public class ApplicationController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class ApplicationController {
     //首页查询各种类型的申请数量
     // /application/myApplicationCount?userId=
     @GetMapping ("/myApplicationCount")
-    public Result<AllApplicationTypeVO> myApplicationCount (@RequestParam("userId") int userId){
+    public Result<AllApplicationTypeVO> myApplicationCount (@RequestParam("userId") @NotNull(message = "userId不可为null") int userId){
         //查询所有申请条数
         AllApplicationTypeVO allApplicationTypeVO = new AllApplicationTypeVO();
         //查询所有申请条数
@@ -41,7 +43,7 @@ public class ApplicationController {
 
     //添加申请模型权限
     @PostMapping("/applyModel")
-    public Result<?> applyModel(@RequestBody ApplyModelDTO applyModelDTO){
+    public Result<Void> applyModel(@RequestBody ApplyModelDTO applyModelDTO){
         int i = applicationService.addApplication(applyModelDTO);
         if(i == 0){
             return Result.error("失败添加申请模型权限");

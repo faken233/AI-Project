@@ -9,21 +9,26 @@ import com.faken.aiproject.po.vo.HomePageInfoVO;
 import com.faken.aiproject.po.vo.PersonalCenterInfoVO;
 import com.faken.aiproject.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 
 @RestController
 @Slf4j
+@Validated
 public class AccountController {
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @PostMapping("/account/register")
-    public Result<?> register(@RequestBody RegisterDTO registerDTO) {
+    public Result<Void> register(@RequestBody RegisterDTO registerDTO) {
 
         int res = accountService.register(registerDTO);
         if (res == 1) {
@@ -37,7 +42,7 @@ public class AccountController {
     }
 
     @PostMapping("/account/register/sendVerificationCode")
-    public Result<?> sendVerificationCode(@RequestBody EmailDTO emailDTO) {
+    public Result<Void> sendVerificationCode(@RequestBody EmailDTO emailDTO) {
         try {
             accountService.sendVerificationCodeAndSaveCode(emailDTO.getEmail());
             return Result.success("发送成功");
@@ -48,7 +53,6 @@ public class AccountController {
 
     @PostMapping("/account/login")
     public Result<UserAndToken> login(@RequestBody LoginDTO loginDTO) {
-
         UserAndToken res = accountService.login(loginDTO);
         if (Objects.isNull(res)) {
             return Result.error("登陆失败，请检查你的账号和密码是否输入正确");
@@ -58,7 +62,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/homePageInfo")
-    public Result<?> getHomePageInfo(@RequestParam("userId") String userId){
+    public Result<HomePageInfoVO> getHomePageInfo(@RequestParam("userId") @NotNull(message = "用户Id不可为null") String userId){
         HomePageInfoVO res = accountService.getHomePageInfo(userId);
         if(Objects.isNull(res)){
             return Result.error("查找失败，请检查你的用户id");
@@ -68,7 +72,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/personalCenterInfo")
-    public Result<?> getPersonalCenterInfo(@RequestParam("userId") String userId){
+    public Result<PersonalCenterInfoVO> getPersonalCenterInfo(@RequestParam("userId") @NotNull(message = "用户Id不可为null") String userId){
         PersonalCenterInfoVO res = accountService.getPersonalCenterInfo(userId);
         if(Objects.isNull(res)){
             return Result.error("查找失败，请检查你的用户id");

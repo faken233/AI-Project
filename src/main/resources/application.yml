@@ -4,19 +4,18 @@ mybatis:
     configuration:
       map-underscore-to-camel-case: true
 server:
-    port: 8080
+    port: 8082
 spring:
     datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
-      password: xieguangqiang
-      url: jdbc:mysql://localhost:3306/ai_mid_exam_24
+      password: Qgstudio_123
+      url: jdbc:mysql://10.21.56.119:3306/ai_mid_24
     redis:
-      host: localhost
+      host: 10.21.56.119
       port: 6379
       database: 0
-      username: default
-      password: 123456
+      password: Qgstudio_123
 email:
   host: smtp.qq.com
   password: ecxcdzqqmwslddcj

@@ -2,6 +2,7 @@ package com.faken.aiproject.controller;
 
 import com.faken.aiproject.po.dto.MissionDTO;
 import com.faken.aiproject.po.result.Result;
+import com.faken.aiproject.po.vo.MissionVO;
 import com.faken.aiproject.po.vo.RecentMissionVO;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 import com.faken.aiproject.service.MissionService;
@@ -45,8 +46,8 @@ public class MissionController {
     }
 
     @GetMapping("/workspaceMission")
-    public Result<List<MissionDTO>> workspaceMission(@RequestParam("userId") int userId) {
-        List<MissionDTO> getWorkspaceMission = missionService.getWorkspaceMission(userId);
+    public Result<List<MissionVO>> workspaceMission(@RequestParam("userId") int userId) {
+        List<MissionVO> getWorkspaceMission = missionService.getWorkspaceMission(userId);
         System.out.println(getWorkspaceMission);
         return Result.success("",  getWorkspaceMission);
     }

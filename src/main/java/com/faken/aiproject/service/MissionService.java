@@ -1,6 +1,7 @@
 package com.faken.aiproject.service;
 
 import com.faken.aiproject.po.dto.MissionDTO;
+import com.faken.aiproject.po.vo.MissionVO;
 import com.faken.aiproject.po.vo.RecentMissionVO;
 import com.faken.aiproject.po.vo.UserCanUseModelVO;
 
@@ -16,5 +17,5 @@ public interface MissionService {
 
     List<RecentMissionVO> getHomePageRecentMission(int userId);
 
-    List<MissionDTO> getWorkspaceMission(int userId);
+    List<MissionVO> getWorkspaceMission(int userId);
 }
